@@ -18,7 +18,6 @@
 <%
 'CONEXION ADO -- HUMBERTO ROJAS
 'Option Explicit
-
 'Se declaran las variables
 Dim Conexion
 Dim Cadena
