@@ -1,0 +1,1115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+<title>Tripulacion</title>
+<!--
+-- firefox--
+*{-moz-box-sizing: border-box;box-sizing: border-box}
+p{margin-top:0px;margin-bottom:1em}
+form{margin:0px}
+input{padding:1px}
+
+-->
+<style type="text/css">
+<!--
+.Estilo1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color: #FFFF00;
+}
+.Estilo2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+.Estilo3 {font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	text-align: justify;
+	color: #575969;
+}
+.Estilo98 {
+	color:#FFBF00
+}
+
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-color: #FFFFFF;
+}
+a:link {
+	color: #FFFFFF;
+}
+a:visited {
+	color: #FFFFFF;
+}
+a:hover {
+	color: #FFFFFF;
+}
+a:active {
+	color: #FFFFFF;
+}
+.Estilo25 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}
+.Estilo25Copia {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+.Estilo16 {	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+.Estilo29 {font-size: 14}
+.Estilo31 {font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; color: #00aff2; text-align: left; }
+.style1 {	font-family: Verdana;
+	color: #000000;
+	font-size: 9px;
+	text-align: right;
+}
+.Estilo32 {
+	color: #57595b
+}
+input[type="text"] { 
+  font-family: 'Arial', serif; 
+  color: #000000; 
+  font-size: 13px;  
+  background-color: #91e1fa; 
+} 
+textarea {   
+  background-color: #91e1fa; 
+  font-family: 'Arial', serif; 
+  color: #000000; 
+  font-size: 13px;
+} 
+
+-->
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="../js/jquerycssmenu.css" />
+<script src="Scripts/AC_RunActiveContent.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../css/estilo_autogest.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="../css/jquery-ui.css">
+<!--<script src="../Scripts/AC_RunActiveContent.js" type="text/javascript"></script>-->
+<script type="text/javascript">
+	function envia(){			
+		var camp = 'nom_ape|Ape_trip';
+		var ast = 'ast_nom_ape|ast_ape';
+		var vali = '¬|¬';
+		if (verifica2(camp, ast, vali, '|', "form1") == false){
+			alert("Los campos con el '*' no pueden estar vacios");
+		}
+		else{
+			var pais_nac = 0;
+			var cod_pais =0;
+			var j;
+			for(j=0;j<pais.length;j++){
+				if(pais[j]==document.forms["form1"].elements["nac_tri"].value){
+					cod_pais = pais_cod[j][0]
+					pais_nac++;
+				}
+			}
+			/*Humberto Rojas 19032014*/
+			var pais_res = 0;
+			var cod_pais_res =0;
+			var j;
+			var ciudad_trip = 0;
+			var cod_ciudad_trip =0;
+			var esta_trip = 0;
+			var cod_edo_trip = 0;	
+			for(j=0;j<pais.length;j++){
+				if(pais[j]==document.forms["form1"].elements["paisRes"].value){
+					cod_pais_res = pais_cod[j][0]
+					pais_res++;
+				}
+			}
+
+			if (pais_nac > 0){
+				if ((img_val(document.form1.img_pasap, "bmp|gif|jpg|png") == true) && (img_val(document.form1.img_visa_eua, "bmp|gif|jpg|png") == true)) {
+					var pasp;
+					var visa;
+					pasp = not_xor(document.forms["form1"].elements["num_pasap"].value, document.forms["form1"].elements["fec_venc"].value);
+					visa = not_xor(document.forms["form1"].elements["num_visa_eua"].value, document.forms["form1"].elements["fec_venc_visa_eua"].value);
+					
+					if (visa*pasp ==1){
+						document.forms["form1"].action = "tripulacion.asp";
+						var alea = aleatorio(1,5000);
+						if (document.form1.aleat.value == alea)
+							document.form1.aleat.value = alea + 1
+						else
+							document.form1.aleat.value = alea
+						document.forms["form1"].elements["cod_nac_tri"].value = cod_pais
+						document.forms["form1"].elements["cod_paisRes"].value = cod_pais_res
+						document.forms["form1"].elements["cod_ciudadtrip"].value = cod_ciudad_trip
+						document.forms["form1"].elements["cod_edo_vzla_trip"].value = cod_edo_trip
+						
+						document.getElementById('VerPasap').style.display = 'none';
+						document.getElementById('VerVisa').style.display = 'none';
+						document.getElementById('VerLic').style.display = 'none';
+						document.getElementById('VerLicEua').style.display = 'none';
+						document.getElementById('VerCer').style.display = 'none';
+						document.getElementById('VerCerEua').style.display = 'none';
+
+						document.forms["form1"].submit();
+					}
+					else{
+						alert("El pasaporte y/o visa (en caso de ser necesarios) deben tener su fecha de vencimiento y viceversa");}
+				}
+				else{
+					alert("Solo se aceptan archivos jpg, gif, bmp o png"); }
+			}
+			else
+				alert("El pa\u00EDs de nacionalidad '" + document.forms["form1"].elements["nac_tri"].value + "' no se encuentra registrado");
+		}
+	}
+	
+	function aleatorio(inferior,superior){
+    	numPosibilidades = superior - inferior
+    	aleat = Math.random() * numPosibilidades
+    	aleat = Math.round(aleat)
+    	return parseInt(inferior) + aleat
+	} 
+	
+	//hidden_num_reg = num de filas de la matriz de elementos insertados
+	//Ej document.form1.lista.value
+	function llenaCampEdit(hidden_num_reg)
+	{
+		var j=0;
+		var x = hidden_num_reg;
+		//
+		///*CAMPOS OCULTOS*/
+		//
+		var elDiv = document.getElementById('VerLicEua'); //se define la variable "elDiv" igual a nuestro div
+        elDiv.style.display='block';
+
+		var elDiv2 = document.getElementById('VerLic'); //se define la variable "elDiv" igual a nuestro div
+        elDiv2.style.display='block';
+	
+		var elDiv3 = document.getElementById('VerCer'); //se define la variable "elDiv" igual a nuestro div
+        elDiv3.style.display='block';
+		
+		var elDiv4 = document.getElementById('VerCerEua'); //se define la variable "elDiv" igual a nuestro div
+        elDiv4.style.display='block';
+		
+		var elDiv5 = document.getElementById('VerPasap'); //se define la variable "elDiv" igual a nuestro div
+        elDiv5.style.display='block';
+		
+		var elDiv6 = document.getElementById('VerVisa'); //se define la variable "elDiv" igual a nuestro div
+        elDiv6.style.display='block';
+		
+		//
+		//
+		///**/
+		//
+		//
+		//
+		//
+		if (x > 1){
+			j = cuenta_reg_Select("form1", "selct_fila", x);
+			if ((j > 1)||(j == 0))
+				alert("Seleccione un registro para editar");
+			if(j == 1){
+				for(var i = 1; i < x; i++){
+					check_box_nom = "selct_fila" + String(i);
+					if(document.forms["form1"].elements[check_box_nom].checked==true)
+						break;}
+				document.forms["form1"].elements["num_trip"].value = document.forms["form1"].elements[check_box_nom + "_0"].value;
+				document.forms["form1"].elements["nom_ape"].value = document.forms["form1"].elements[check_box_nom + "_1"].value;
+				document.forms["form1"].elements["nom_ape2"].value = document.forms["form1"].elements[check_box_nom + "_1"].value;
+				document.forms["form1"].elements["Ape_trip"].value = document.forms["form1"].elements[check_box_nom + "_41"].value;
+				document.forms["form1"].elements["Ape_trip2"].value = document.forms["form1"].elements[check_box_nom + "_41"].value;
+				
+				document.forms["form1"].elements["cedula"].value = document.forms["form1"].elements[check_box_nom + "_2"].value;
+				document.forms["form1"].elements["cedula2"].value = document.forms["form1"].elements[check_box_nom + "_2"].value;
+				document.forms["form1"].elements["tel_cel"].value = document.forms["form1"].elements[check_box_nom + "_3"].value;
+
+				document.forms["form1"].elements["e_mail"].value = document.forms["form1"].elements[check_box_nom + "_4"].value;
+				document.forms["form1"].elements["e_mail2"].value = document.forms["form1"].elements[check_box_nom + "_4"].value;
+				document.forms["form1"].elements["num_pasap"].value = document.forms["form1"].elements[check_box_nom + "_5"].value;
+				document.forms["form1"].elements["num_pasap2"].value = document.forms["form1"].elements[check_box_nom + "_5"].value;
+				document.forms["form1"].elements["fec_venc"].value = document.forms["form1"].elements[check_box_nom + "_6"].value;
+				if (document.forms["form1"].elements[check_box_nom + "_7"].value != "")
+				{
+					document.forms["form1"].elements["img_pasap"].value = ""
+					//document.forms["form1"].elements["img_pasap"].style.background = "#0000FF"
+				}
+				else
+				{
+					document.forms["form1"].elements["img_pasap"].style.background = "#FFFFFF"
+				}
+				document.forms["form1"].elements["num_visa_eua"].value = document.forms["form1"].elements[check_box_nom + "_8"].value;
+				document.forms["form1"].elements["num_visa_eua2"].value = document.forms["form1"].elements[check_box_nom + "_8"].value;
+				document.forms["form1"].elements["fec_venc_visa_eua"].value = document.forms["form1"].elements[check_box_nom + "_9"].value;
+        
+				if (document.forms["form1"].elements[check_box_nom + "_10"].value != "")
+				{
+					document.forms["form1"].elements["img_visa_eua"].value = ""
+					//document.forms["form1"].elements["img_visa_eua"].style.background = "#0000FF"
+				}
+				else
+				{
+					document.forms["form1"].elements["img_visa_eua"].style.background = "#FFFFFF"
+				}
+					
+				document.forms["form1"].elements["num_lic_tri"].value = document.forms["form1"].elements[check_box_nom + "_11"].value;
+				document.forms["form1"].elements["num_lic_tri2"].value = document.forms["form1"].elements[check_box_nom + "_11"].value;
+				document.forms["form1"].elements["fec_venc_lic"].value = document.forms["form1"].elements[check_box_nom + "_12"].value;
+				
+				if (document.forms["form1"].elements[check_box_nom + "_13"].value != "")
+				{
+					document.forms["form1"].elements["img_lic_tri"].value = ""
+					//document.forms["form1"].elements["img_lic_tri"].style.background = "#0000FF"
+				}
+				else
+				{
+					document.forms["form1"].elements["img_lic_tri"].style.background = "#FFFFFF"
+				}
+		//		 				
+				
+				document.forms["form1"].elements["num_lic_eua_tri"].value = document.forms["form1"].elements[check_box_nom + "_14"].value; 
+				document.forms["form1"].elements["num_lic_eua_tri2"].value = document.forms["form1"].elements[check_box_nom + "_14"].value; 				
+				//document.forms["form1"].elements["fec_venc_eua_lic"].value = document.forms["form1"].elements[check_box_nom + "_15"].value;
+				
+				if (document.forms["form1"].elements[check_box_nom + "_15"].value != "")
+				{
+					document.forms["form1"].elements["img_lic_eua_tri"].value = ""
+					//document.forms["form1"].elements["img_lic_eua_tri"].style.background = "#0000FF"
+				}
+				else
+				{
+					document.forms["form1"].elements["img_cer_tri"].style.background = "#FFFFFF"
+				}
+				
+				
+				document.forms["form1"].elements["num_cer_tri"].value = document.forms["form1"].elements[check_box_nom + "_16"].value; 
+				document.forms["form1"].elements["num_cer_tri2"].value = document.forms["form1"].elements[check_box_nom + "_16"].value; 				
+				document.forms["form1"].elements["fec_venc_cer"].value = document.forms["form1"].elements[check_box_nom + "_17"].value;
+				
+				if (document.forms["form1"].elements[check_box_nom + "_18"].value != "")
+				{
+					document.forms["form1"].elements["img_cer_tri"].value = ""
+					//document.forms["form1"].elements["img_cer_tri"].style.background = "#0000FF"
+				}
+				else
+				{
+					document.forms["form1"].elements["img_cer_tri"].style.background = "#FFFFFF"
+				}
+				
+				//document.forms["form1"].elements["tip_trip"].value = document.forms["form1"].elements[check_box_nom + "_22"].value; 
+				
+				//Nuevo////
+        
+				document.forms["form1"].elements["num_cer_eua_tri"].value = document.forms["form1"].elements[check_box_nom + "_19"].value; 
+				document.forms["form1"].elements["num_cer_eua_tri2"].value = document.forms["form1"].elements[check_box_nom + "_19"].value; 				
+				document.forms["form1"].elements["fec_exp_eua_cer"].value = document.forms["form1"].elements[check_box_nom + "_20"].value;
+				
+				if (document.forms["form1"].elements[check_box_nom + "_21"].value != "")
+				{
+					document.forms["form1"].elements["img_cer_eua_tri"].value = ""
+					//document.forms["form1"].elements["img_cer_eua_tri"].style.background = "#0000FF"
+				}
+				else
+				{
+					document.forms["form1"].elements["img_cer_eua_tri"].style.background = "#FFFFFF"
+				}
+        
+				//////////////////////////////////////////////
+        
+				document.forms["form1"].elements["nac_tri"].value = recomponer(document.forms["form1"].elements[check_box_nom + "_22"].value); 
+				document.forms["form1"].elements["fec_nac_tri"].value = document.forms["form1"].elements[check_box_nom + "_23"].value;  
+		//		
+		//		//document.forms["form1"].elements["sexo"].value = 1; //pendiente 
+		//		
+				document.forms["form1"].elements["paisRes"].value = document.forms["form1"].elements[check_box_nom + "_25"].value;  
+				
+				document.forms["form1"].elements["direccion"].value = document.forms["form1"].elements[check_box_nom + "_27"].value;
+		
+		    	document.forms["form1"].elements["edo_vzla_trip"].value = document.forms["form1"].elements[check_box_nom + "_29"].value;
+		
+				document.forms["form1"].elements["ciudadtrip"].value = document.forms["form1"].elements[check_box_nom + "_31"].value;
+				
+				document.forms["form1"].elements["tipovisa"].value = document.forms["form1"].elements[check_box_nom + "_33"].value;
+				
+				document.forms["form1"].elements["fec_exp_visa"].value = document.forms["form1"].elements[check_box_nom + "_35"].value;
+				
+				document.forms["form1"].elements["ciudadvisa"].value = document.forms["form1"].elements[check_box_nom + "_37"].value;
+				
+				//document.forms["form1"].elements["sexo"].value = document.forms["form1"].elements[check_box_nom + "_39"].value;			
+								
+				
+			var valor = document.forms["form1"].elements[check_box_nom + "_39"].value; 
+			
+			document.forms["form1"].elements["img_cer_tri"].value = document.forms["form1"].elements[check_box_nom + "_43"].value;
+			
+		//	document.forms["form1"].elements["img_cer_eua_tri"].value = document.forms["form1"].elements[check_box_nom + "_45"].value;
+			
+			document.forms["form1"].elements["img_lic_tri"].value = document.forms["form1"].elements[check_box_nom + "_47"].value;
+			
+			document.forms["form1"].elements["img_lic_eua_tri"].value = document.forms["form1"].elements[check_box_nom + "_49"].value;
+			
+			document.forms["form1"].elements["img_pasap"].value = document.forms["form1"].elements[check_box_nom + "_51"].value;
+		
+			document.forms["form1"].elements["img_visa_eua"].value = document.forms["form1"].elements[check_box_nom + "_53"].value;
+		//	
+		//	
+		//	
+		//	//var i = valor ? 1 : 0;
+		//	//alert(valor);
+		//	
+		//	
+		//	
+		
+			if(valor == "F"){
+				
+				//alert("ENTRE 1" );
+			
+				 for (i=0;i<document.forms["form1"].elements["sexo"].length;i++){ 
+					 if (document.forms["form1"].elements["sexo"][i].value > 0){
+						               //alert("A" + document.forms["form1"].elements["sexo"][i].value);
+						 document.forms["form1"].elements["sexo"][i].checked=true
+						 break; 
+					 } 
+				  }	
+			
+			}else{
+				
+				 //alert("ENTRE 2");
+				
+				 for (i=0;i<document.form1.sexo.length;i++){ 
+					 if (document.forms["form1"].elements["sexo"][i].value <= 0){
+						               //alert("B" + document.forms["form1"].elements["sexo"][i].value);
+						 document.forms["form1"].elements["sexo"][i].checked=true
+						 break; 
+					 } 
+				  }		
+			
+			}
+		
+		//	
+		//	
+		//	
+		//	
+		//	  //alert(document.forms["form1"].elements[check_box_nom + "_24"].value);
+		//	
+		//	
+		//					
+		//		
+				if (document.forms["form1"].elements[check_box_nom + "_24"].value == "Si")
+					document.forms["form1"].elements["activo"].checked = true;
+				else
+					document.forms["form1"].elements["activo"].checked = false;
+				
+				document.forms["form1"].elements["edit_inser_borr"].value = "1";
+			}
+		}
+	}   
+	
+	//ocultar o mostrar porciones de codigo html (capas) 
+	function mostrar_esconder(value, capa) {
+    	/*if (value==0) {
+        	if (document.layers)
+           		document.layers[capa].visibility='hide';
+        	else
+           		document.all[capa].style.visibility='hidden';
+   		}
+   		else if (value==1) {
+       		if (document.layers)
+          		document.layers[capa].visibility='show';
+       		else
+          		document.all[capa].style.visibility='visible';
+   		}*/
+   			// showing
+			if (value==0)
+   				document.getElementById(capa).style.display = '';
+
+			// hiding
+			else if (value==1)
+				document.getElementById(capa).style.display = 'none';
+
+	}
+	
+	//Si cantidad_capas = 1 entonces capa = "capa_id"
+	//Si cantidad_capas > 1 entonces capa = "capa_id1|capa_id2|...|capa_idn" (se usa cantidad_capas para facilitar la programación)
+	function muestrOcultMuchCaps(value, capa, cantidad_capas)
+	{
+			if(cantidad_capas == 1)
+				mostrar_esconder(value, capa);
+			else if(cantidad_capas > 1)
+			{
+				var lista = capa.split('|');
+				var i;
+				for(i=0;i < cantidad_capas; i++)
+				{
+						mostrar_esconder(value, lista[i]);
+				}
+			}
+	}
+	
+	//Siempre se acompaña de un hidden ->  elhidden
+	function capa(capa, nombreObj, cantidad_capas, elhidden)
+	{
+		if (document.forms["form1"].elements[elhidden].value=="Ver")
+		{
+			muestrOcultMuchCaps(0, capa, cantidad_capas);
+			document.forms["form1"].elements[elhidden].value = "Ocultar";
+			document.getElementById(nombreObj).src="../imagenes/ojorg cerrar.gif";
+		}
+		else if(document.forms["form1"].elements[elhidden].value=="Ocultar")
+		{
+			muestrOcultMuchCaps(1, capa, cantidad_capas);
+			document.forms["form1"].elements[elhidden].value = "Ver";
+			document.getElementById(nombreObj).src="../imagenes/ojorg abrir.gif";
+		}
+	}	
+	
+	//function elimina(hidden_num_reg)
+	function elimina(num_trip)
+	{
+		var j=0;
+		//var x = hidden_num_reg;
+		//if (x > 1){
+		//	j = cuenta_reg_Select("form1", "selct_fila", x);
+		//	if (j == 0){
+			if (num_trip == ""){
+				alert("Seleccione por lo menos un registro");
+			}
+			else{
+				var confirmacion;
+				var confirmacion2;
+				//confirmacion = confirm("¿Desea usted eliminar estos \u00edtems?");
+				confirmacion = confirm("¿Desea usted eliminar este \u00edtem?");
+				if (confirmacion == true){
+					confirmacion2 = confirm("¿Est\u00e1 usted seguro de eliminar estos \u00edtems?"); 
+					if (confirmacion2 == true){
+						document.forms["form1"].action = "tripulacion.asp";
+						//document.form1.action = "aeronave.asp";
+						document.forms["form1"].elements["edit_inser_borr"].value = "2";
+						//Garantizar que sea un nÃºmero diferente siempre
+						//asÃ­ se diferencia un submit de un refresh
+						var alea = aleatorio(1,5000);
+						if (document.form1.aleat.value == alea)
+							document.form1.aleat.value = alea + 1
+						else
+							document.form1.aleat.value = alea
+						
+						document.getElementById('VerPasap').style.display = 'none';
+						document.getElementById('VerVisa').style.display = 'none';
+						document.getElementById('VerLic').style.display = 'none';
+						document.getElementById('VerLicEua').style.display = 'none';
+						document.getElementById('VerCer').style.display = 'none';
+						document.getElementById('VerCerEua').style.display = 'none';	
+							
+						document.forms["form1"].submit();
+					}
+				}
+			}
+		//}
+	}
+	
+	
+	function selecciona(val){
+		
+		var valor = val;
+		
+		if(valor = 1){
+		  
+		  document.forms["form1"].elements["sexo2"].checked = false;
+		  document.forms["form1"].elements["sexo"].checked = true;
+		  //document.forms["form1"].elements["sexo2"].checked = false;
+		}else if (valor = 2) {
+		  
+		  document.forms["form1"].elements["sexo"].checked = false;
+		  document.forms["form1"].elements["sexo2"].checked = true;	
+		  //document.forms["form1"].elements["sexo"].checked = false;
+		}
+		
+	}
+	
+	
+	function busPas()
+	{	
+             			 
+	     var largo = document.forms["form1"].elements["busquedaPas"].value;
+         var n = largo.length;
+	     var e = window.event;
+         document.forms["form1"].action = "tripulacion.asp";		 
+		 if (e.keyCode == 13){
+                    if (n > 2){
+		              document.form1.submit();
+                    }else{
+                       alert("Ingrese un valor de bùsqueda de mayor tamaño");
+                    }
+
+	     }
+	}
+
+
+	function submit() {
+				   var largo = document.forms["form1"].elements["busquedaPas"].value;
+				   var n = largo.length;
+                   document.forms["form1"].action = "tripulacion.asp";
+				   if (n > 2){
+			          document.form1.submit();
+				   }else{
+					  alert("Ingrese un valor de bùsqueda de mayor tamaño");
+				    }
+		}	
+	
+</script>
+
+<style></style>
+
+<link rel="stylesheet" type="text/css" href="../js/jquerycssmenu.css" />
+<style type="text/css">
+<!--
+.style1 {
+	font-family: Verdana;
+	color: #000000;
+	font-size: 10px;
+	text-align: right;
+}
+-->
+</style>
+
+<style type="text/css">
+.Estilo11 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color: #00aff2;
+}
+.Estilo251 {	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 16px;
+	color: #57595b;
+	text-align: center;
+}
+.Estilo33 {	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	text-align: center;
+	color: #000000;
+}
+.Estilo311 {	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #00ADE5;
+	text-align: center;
+}
+.Estilo33 {	color: #000000
+}
+</style>
+
+<style>
+th, td { white-space:  }
+    div.dataTables_wrapper {
+        width: 800px;
+        margin: 0 auto;
+    }
+
+</style>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquerycssmenu.js"></script>
+<script src="../js/jquery-1.10.2.min.js"></script>
+<script src="../js/jquery.dataTables.js"></script>
+<script src="../js/jquery-ui.js"></script>
+
+<style type="text/css">
+<!--
+.Estilo33 {color: #993399}
+.Estilo34 {color: #FFFFFF}
+-->
+</style>
+
+<script>
+
+$(document).ready(function() {
+   var selected = [];	  
+	//INICIALIZACION********************** 
+	var table = $('#table_id').DataTable({
+   "scrollX": true,
+   "stateSave": false,
+   "processing": true,
+   "serverSide": false,
+   "order": [[ 1, "asc" ]],
+   
+   	 "rowCallback": function( row, data ) {
+            if ( $.inArray(data.DT_RowId, selected) !== -1 ) {
+                $(row).addClass('selected');
+            }
+        },
+		
+   
+   	"columnDefs": [
+            {
+                "targets": [ 0 ],
+                "visible": true,
+                "searchable": true
+            },
+			
+			{
+                "targets": [ 1 ],
+                "visible": true,
+                "searchable": true
+            }]	
+   });
+   
+   //DATA TABLA
+	var data = table
+    .rows()
+    .data();
+    
+    //SELECCION ROW**************************************
+		$('#table_id tbody').on( 'click', 'tr', function () {
+			
+		var id = this.id;
+        var index = $.inArray(id, selected);		
+		var tr = $(this).parents('tr').data(); 
+	    var data = table.row( this ).data();
+		var ok = 0;
+		var otros = "";
+		
+		    $('#form1')[0].reset();	
+				
+			if ( $(this).hasClass('selected') ) {
+				
+				
+				$(this).removeClass('selected');
+			}
+			else {
+				table.$('tr.selected').removeClass('selected');
+				$(this).addClass('selected');
+				ok = 1;
+			}
+			
+			
+			if (ok = 1){
+				
+				//var elDiv = document.getElementById('VerLicEua'); //se define la variable "elDiv" igual a nuestro div
+         		//elDiv.style.display='block';
+
+		 		//var elDiv2 = document.getElementById('VerLic'); //se define la variable "elDiv" igual a nuestro div
+         		//elDiv2.style.display='block';
+	
+		 		//var elDiv3 = document.getElementById('VerCer'); //se define la variable "elDiv" igual a nuestro div
+         		//elDiv3.style.display='block';
+		 
+		 		//var elDiv4 = document.getElementById('VerCerEua'); //se define la variable "elDiv" igual a nuestro div
+         		//elDiv4.style.display='block';
+		 
+		 		//var elDiv5 = document.getElementById('VerPasap'); //se define la variable "elDiv" igual a nuestro div
+         		//elDiv5.style.display='block';
+		 
+				//var elDiv6 = document.getElementById('VerVisa'); //se define la variable "elDiv" igual a nuestro div
+         		//elDiv6.style.display='block';
+				
+				document.forms["form1"].elements["nom_ape"].value = data[0];
+				document.forms["form1"].elements["nom_ape2"].value = data[0];
+				document.forms["form1"].elements["Ape_trip"].value = data[1];
+				document.forms["form1"].elements["Ape_trip2"].value = data[1];
+				document.forms["form1"].elements["cedula"].value =  data[2];
+				document.forms["form1"].elements["cedula2"].value = data[2];
+				document.forms["form1"].elements["tel_cel"].value = data[3];
+				document.forms["form1"].elements["e_mail"].value = data[4];
+				document.forms["form1"].elements["e_mail2"].value = data[4];
+				document.forms["form1"].elements["direccion"].value  = data[5];
+				document.forms["form1"].elements["num_pasap"].value = data[6];
+				document.forms["form1"].elements["num_pasap2"].value = data[6];
+				document.forms["form1"].elements["fec_venc"].value  = data[7];								
+				document.forms["form1"].elements["num_visa_eua"].value = data[9];
+				document.forms["form1"].elements["num_visa_eua2"].value = data[9];
+				document.forms["form1"].elements["fec_venc_visa_eua"].value = data[10];				
+				document.forms["form1"].elements["num_lic_tri"].value = data[12];
+				document.forms["form1"].elements["num_lic_tri2"].value = data[12];
+				document.forms["form1"].elements["fec_venc_lic"].value = data[13];				
+				document.forms["form1"].elements["num_lic_eua_tri"].value = data[15]; 
+				document.forms["form1"].elements["num_lic_eua_tri2"].value = data[15]; 				
+				document.forms["form1"].elements["num_cer_tri"].value = data[17]; 
+				document.forms["form1"].elements["num_cer_tri2"].value = data[17]; 				
+				document.forms["form1"].elements["fec_venc_cer"].value = data[18];
+				document.forms["form1"].elements["num_cer_eua_tri"].value = data[20];
+				document.forms["form1"].elements["num_cer_eua_tri2"].value = data[20];				
+				
+				if (data[21] != "&nbsp;")	
+					document.forms["form1"].elements["fec_exp_eua_cer"].value = data[21];							
+				
+				if (data[23] == "Si")
+					document.forms["form1"].elements["activo"].checked = true;
+				else
+					document.forms["form1"].elements["activo"].checked = false;
+					
+				document.forms["form1"].elements["edit_inser_borr"].value = "1";
+				
+				otros = data[24].split("|");
+				
+				if(otros[0] == "False"){
+					document.forms["form1"].elements["sexo"].value=0;
+				}
+				else{
+					document.forms["form1"].elements["sexo"].value=1;	
+				}
+				document.forms["form1"].elements["nac_tri"].value = otros[1];
+				document.forms["form1"].elements["fec_nac_tri"].value = otros[2];
+				document.forms["form1"].elements["paisRes"].value = otros[3];
+				document.forms["form1"].elements["edo_vzla_trip"].value = otros[4];
+				document.forms["form1"].elements["ciudadtrip"].value = otros[5];
+				document.forms["form1"].elements["tipovisa"].value = otros[6];
+				document.forms["form1"].elements["fec_exp_visa"].value = otros[7];
+				document.forms["form1"].elements["ciudadvisa"].value = otros[8];
+				document.forms["form1"].elements["num_trip"].value = otros[9];
+				
+				if (otros[10] == "Nulo")
+				{
+					document.getElementById('VerPasap').style.display = 'none';
+				}
+				else
+				{
+					document.getElementById('VerPasap').style.display = '';	
+					document.forms["form1"].elements["img_pasap"].value = otros[10];
+				}
+					
+				if (otros[11] == "Nulo")
+				{
+					document.getElementById('VerVisa').style.display = 'none';
+				}
+				else
+				{
+					document.getElementById('VerVisa').style.display = '';	
+					document.forms["form1"].elements["img_visa_eua"].value = otros[11];
+				}	
+				if (otros[12] == "Nulo")
+				{
+					document.getElementById('VerLic').style.display = 'none';
+				}
+				else
+				{
+					document.getElementById('VerLic').style.display = '';
+					document.forms["form1"].elements["img_lic_tri"].value = otros[12];
+				}	
+				if (otros[13] == "Nulo")
+				{
+					document.getElementById('VerLicEua').style.display = 'none';
+				}
+				else
+				{
+					document.getElementById('VerLicEua').style.display = '';
+					document.forms["form1"].elements["img_lic_eua_tri"].value = otros[13];
+				}
+				if (otros[14] == "Nulo")
+				{
+					document.getElementById('VerCer').style.display = 'none';
+				}
+				else
+				{
+					document.getElementById('VerCer').style.display = '';
+					document.forms["form1"].elements["img_cer_tri"].value = otros[14];
+				}	
+				if (otros[15] == "Nulo")
+				{
+					document.getElementById('VerCerEua').style.display = 'none';
+				}
+				else
+				{
+					document.getElementById('VerCerEua').style.display = '';
+					document.forms["form1"].elements["img_cer_eua_tri"].value = otros[15];
+				}
+				document.forms["form1"].elements["edit_inser_borr"].value = "1";
+				
+				/*document.getElementById('VerLicEua').style.display = '';
+				document.getElementById('VerLic').style.display = '';
+				document.getElementById('VerCer').style.display = '';
+				document.getElementById('VerCerEua').style.display = '';
+				document.getElementById('VerPasap').style.display = '';
+				document.getElementById('VerVisa').style.display = '';*/
+			}
+				
+
+		
+        } );
+   
+} );
+  
+
+</script>
+
+
+</head>
+<body >
+<form id="form1" name="form1" method="post" enctype="multipart/form-data" action="">
+<table width="839" height="100" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+	<td colspan="8" bgcolor="#29AAE3"><div align="center"><img src="../imagenes/top_tripulacion.jpg" alt="SIEP - Tripulacion" width="840" height="225" /></div></td>
+</tr>
+ <tr>
+    <td colspan="8" bgcolor="#29AAE3"><!--#include file="../manifiestos/enlaces.asp" --></td>
+  </tr>
+</table>
+
+<table width="840" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#f5fcf0">
+<tr><%=thidden%>
+	<td colspan="5">&nbsp;</td></tr>
+<tr>
+	<td>&nbsp;</td>
+	<td colspan="4" align="left"><%=Nom_cli%></td></tr>
+<tr>
+	<td colspan="5">&nbsp;</td></tr>
+<tr>
+	<td width="30">&nbsp;</td>
+	<td colspan="4"><span class="Estilo31">Tripulaci&oacute;n</span></td></tr>
+<tr>
+	<td>&nbsp;</td>
+	<td colspan="4">&nbsp;</td></tr>
+		<%=env%> <%=aleat%> <%=lista%> <%=edit_inser_borr%>
+<tr>
+	<td>&nbsp;</td>
+	<td colspan="3" align="justify"><span class="Estilo3">Aqu&iacute;  podr&aacute;s registrar la tripulaci&oacute;n de los diferentes vuelos, bas&aacute;ndose&nbsp; en los tipos de tripulaci&oacute;n, tales como:  Capitanes (PIC), copilotos y tripulaci&oacute;n de cabina. Al registrarlos una vez  podr&aacute;s disponer de ese mismo registro las veces que sea necesario para otros  vuelos. Podr&aacute;s adjuntar im&aacute;genes de documentos escaneados y disponer de ellas  en todo momento. Todos los registros efectuados podr&aacute;n ser consultados desde la  tabla de m&aacute;s abajo y modificados o eliminados de ser necesarios. Tambi&eacute;n puede  pasar a un status de desactivados o no activos.</span></td>
+	<td width="35">&nbsp;</td></tr>
+<tr>
+	<td>&nbsp;</td>
+	<td colspan="3">&nbsp;</td>
+	<td>&nbsp;</td></tr>
+<tr>
+	<td>&nbsp;</td>
+	<td colspan="3">
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+			<td colspan="4"><span class="Estilo31">Nuevo Tripulante</span></td></tr>
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+			<td width="195"><span class="Estilo25">Nombre</span> <span class="Estilo98"> *</span></td>
+			<td width="470" align="left"><%=nom_ape%><%=ast_nom_ape%></td>
+			<td width="195"><span class="Estilo25">Apellido</span><span class="Estilo98"> *</span></td>
+    		<td width="470" align="left"><%=Ape_trip%><%=ast_ape%></td></tr>
+    	<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+			<td><span class="Estilo25">Cédula</span><span class="Estilo98"> *</span><label></label></td>
+			<td><%=cedula%><%=ast_cedula%><br><span class="style1">Ejem. V12345678</span></br></td>
+			<td><span class="Estilo25">Sexo</span><label></label></td>
+			<td><%=sexo%><span class="Estilo25">Masculino</span><%=sexo2%><span class="Estilo25">Femenino</span></td></tr>
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+			<td><span class="Estilo25">Pa&iacute;s de Residencia</span></td>
+			<td align="left"><div id="autosuggest">
+				<ul></ul></div><label><div align="left"><%=paisRes%><%=ast_paisRes%></div></label>
+				<!--#include file="../js/list_autogest_pais.js" -->
+				<!--#include file="../js/list_autogest_pais_cod.js" -->
+				<script language="javascript" type="text/javascript">new AutoSuggest(document.getElementById('paisRes'),pais);</script></td>
+			<td><span class="Estilo25">Dirección</span><label></label></td>
+			<td><%=direccion%><%=ast_direccion%></td></tr>
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+			<td><span class="Estilo25">Estado</span><label></label></td>
+			<td><label> <%=edo_vzla_trip%><%=ast_edo_vzla_trip%></label></td>
+			<td><label><span class="Estilo25">Ciudad</span></label></td>
+			<td><label><%=ciudadtrip%><%=ast_ciudadtrip%></label></td></tr>
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+			<td><span class="Estilo25">Fecha de nacimiento </span></td>
+			<td align="left"><%=fec_nac_tri%><%=ast_fec_nac_tri%></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td></tr>	
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+			<td><span class="Estilo25">N&ordm; de licencia </span></td>
+			<td align="left" colspan = "3"><%=num_lic_tri%><%=ast_num_lic_tri%><%=boton_lic%><%=hidden_lic%></td></tr>		
+		<tr id="capa_lic" style="display: none">
+			<td colspan="4">&nbsp;</td></tr>
+		<tr id="capa_lic2" style="display: none">
+			<td><span class="Estilo25"><span class="Estilo25">Fecha venci. licencia</span></span></td>
+    		<td align="left" colspan = "3"><%=fec_venc_lic%><%=ast_fec_venc_lic%></td></tr>		
+		<tr id="capa_lic3" style="display: none">
+			<td colspan="4">&nbsp;</td></tr>	
+		<tr id="capa_lic4" style="display: none">
+			<td><span class="Estilo25"><span class="Estilo25Copia">Imagen licencia</span></td>
+			<td colspan = "3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td width="46%"><%=img_lic_tri%><%=ast_img_lic_tri%></td>
+			    <td width="54%" align = "left" id="VerLic" style="display: none"><%=botonVer2%></td>
+
+			    </tr>
+		    </table></td>
+			</tr>		
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>	
+		
+		<tr>
+			<td><span class="Estilo25">N&ordm; Licencia EEUU </span></td>
+			<td align="left" colspan = "3"><%=num_lic_eua_tri%><%=ast_num_lic_eua_tri%><%=boton_eua_lic%><%=hidden_lic_eua%></td></tr>
+		<tr id="capa_eua_lic" style="display: none">
+			<td colspan="4">&nbsp;</td></tr>
+		<tr id="capa_eua_lic2" style="display: none">	
+			<td><span class="Estilo25"><span class="Estilo25Copia">Imagen licencia EEUU</span></span></td>
+			<td colspan = "3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td width="46%"><%=img_lic_eua_tri%><%=ast_img_lic_eua_tri%></td>
+                <td width="54%" align = "left" id="VerLicEua" style="display: none"><%=botonVer%></td>
+			    </tr>
+		    </table></td>
+			</tr>	
+		
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>		
+			
+		<tr>	
+			<td width="195"><span class="Estilo25">N&ordm; de certificado médico</span></td>
+			<td align="left" colspan = "3"><%=num_cer_tri%><%=ast_num_cer_tri%><%=boton_cert%><%=hidden_cert%></td></tr>
+		<tr id="capa_cert" style="display: none">
+			<td colspan="4">&nbsp;</td></tr>
+		<tr id="capa_cert2" style="display: none">
+			<td width="195"><span class="Estilo25"><span class="Estilo25">Fec. venc. certificado m&eacute;dico </span></span></td>
+    		<td align="left" colspan = "3"><%=fec_venc_cer%><%=ast_fec_venc_cer%></td></tr>
+		<tr id="capa_cert3" style="display: none">
+    		<td colspan="4">&nbsp;</td></tr>
+    	<tr id="capa_cert4" style="display: none">	
+    		<td width="195"><span class="Estilo25"><span class="Estilo25">Imagen certificado </span></span></td>
+			<td align="left" colspan = "3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td width="46%"><%=img_cer_tri%><%=ast_img_cer_tri%></td>
+                <td width="54%" align="left" id="VerCer" style="display: none"><%=botonVer3%></td>
+			    </tr>
+		    </table></td>
+			</tr>			
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+			<td width="195"><span class="Estilo25">N&ordm; cert. med. EEUU </span><span class="Estilo25">(Applicant id)</span></td>
+			<td align="left" colspan = "3"><%=num_cer_eua_tri%><%=ast_num_cer_eua_tri%><%=boton_cert_eua%><%=hidden_cert_eua%></td></tr>
+		<tr id="capa_cert_eua" style="display: none">
+			<td colspan="4">&nbsp;</td></tr>
+		<tr id="capa_cert_eua2" style="display: none">
+			<td width="195"><span class="Estilo25"><span class="Estilo25">Fec. exp. Applicant id</span></span></td>
+			<td align="left" colspan = "3"><%=fec_exp_eua_cer%><%=ast_fec_exp_eua_cer%></td></tr>
+		<tr id="capa_cert_eua3" style="display: none">
+			<td colspan="4">&nbsp;</td></tr>
+		<tr id="capa_cert_eua4" style="display: none">
+			<td width="195"><span class="Estilo25"><span class="Estilo25">Imagen Applicant id</span></span></td>
+			<td align="left" colspan = "3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td width="46%"><%=img_cer_eua_tri%><%=ast_img_cer_eua_tri%></td>
+			    <td width="54%" align="left" id="VerCerEua" style="display: none"><%=botonVer4%></td>
+			    </tr>
+		    </table></td>
+			</tr>
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>		
+		<tr>
+			<td><span class="Estilo25">Pa&iacute;s de &nbsp;&nbsp; </span><span class="Estilo98"> *</span> <span class="Estilo25">nacionalidad</span></td>
+			<td align="left"><div id="autosuggest"><ul></ul></div>
+				<label><div align="left"><%=nac_tri%><%=ast_nac_tri%></div></label>
+				<!--#include file="../js/list_autogest_pais.js" -->
+				<!--#include file="../js/list_autogest_pais_cod.js" -->
+				<script language="javascript" type="text/javascript">new AutoSuggest(document.getElementById('nac_tri'),pais);</script></td>
+			<td class="Estilo25">Teléfono celular</td>
+    		<td class="Estilo25"><%=tel_cel%><%=ast_tel_cel%></td></tr>
+		
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+			<td><span class="Estilo25">Email</span></td>
+			<td colspan = "3"><%=e_mail%><%=ast_e_mail%></td></tr>
+		<tr>
+			<td colspan="4">&nbsp;</td></tr> 		
+		<tr>
+			<td><span class="Estilo25">Nº pasaporte</span></td>
+			<td><%=num_pasap%><%=ast_num_pasap%></td>
+			<td><span class="Estilo25">Fecha de vencimiento</span></td>
+    		<td><%=fec_venc%><%=cal%><%=ast_fec_venc%></td></tr>
+    	<tr>
+			<td colspan="4">&nbsp;</td></tr>
+    	<tr>
+    		<td><span class="Estilo25">Imagen pasaporte</span></td>
+			<td colspan = "3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			  <tr>
+			    <td width="46%"><%=img_pasap%><%=ast_img_pasap%></td>
+			    <td width="54%" align="left" id="VerPasap" style="display: none"><%=botonVer5%></td>
+			    </tr>
+		    </table></td>
+			</tr>
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>			
+		<tr>
+			<td><span class="Estilo25">Nº visa americana</span></td>
+			<td><%=num_visa_eua%><%=ast_num_visa_eua%></td>	
+			<td><span class="Estilo25">Fecha de vencimiento</span></td>
+			<td><%=fec_venc_visa_eua%><%=cal2%><%=ast_fec_venc_visa_eua%></td></tr>
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>	
+			<td><span class="Estilo25">Imagen visa</span></td>
+    		<td colspan = "3"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+    		  <tr>
+    		    <td width="46%"><%=img_visa_eua%><%=ast_img_visa_eua%></td>
+				<td width="54%" align="left" id="VerVisa" style="display: none"><%=botonVer6%></td>
+  		    </tr>
+  		  </table></td>
+    		</tr>				    			
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>			
+		<tr>
+			<td align="center" colspan="4"><span class="Estilo31">Si posee visa venezolana indique:</span></td></tr>
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+			<td><span class="Estilo25">Tipo visa</span><label></label></td>
+			<td><%=tipovisa%><%=ast_tipovisa%></td>
+			<td><span class="Estilo25">Fecha expedición visa</span></td>
+    		<td><%=fec_exp_visa%><%=ast_fec_exp_visa%></td></tr>
+    	<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+			<td><span class="Estilo25">Ciudad de expedición visa</span><label></label></td>
+			<td align = "left"><%=ciudadvisa%><%=ast_ciudadvisa%></td>
+			<td colspan = "3">&nbsp;</td></tr>	
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>	
+			<td><span class="Estilo25">Activo</span></td>
+			<td colspan = "3"><label><%=activo%></label></td></tr>	
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>	
+		<tr>
+			<td align="center" colspan="4"><%=boton_agregar%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=boton_borrar%></td></tr>	
+		<tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+            <td colspan="4" align="center" bgcolor="#91e1fa"><span class="Estilo31">Lista de tripulantes</span></td></tr>
+        <tr>
+			<td colspan="4">&nbsp;</td></tr>
+		<tr>
+			<td align="center" colspan="4">
+				<!--<div align="center" class="Estilo33" style="height: 600px; width: 419px;overflow: scroll;">-->
+				<!--<div id="tabs" style="width:600px;width: 419px;overflow: scroll;">--> 
+				<!--<div id="tabs" style="width:600px;width: 419px;">-->
+					<!--<%=tabla%></div>--><!--</div>--><!--<span class="Estilo33"></span><p>&nbsp;</p>-->
+				<!--<p><span class="Estilo33"><%=boton_editar%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<%=boton_borrar%></span></p>-->
+				<%=tabla%>
+				
+				
+				</td></tr>
+		<!--<tr>
+			<td align="center" colspan="4">
+				<div id="tabs" style="width:600px; margin-top:10px;margin-left: 180px;overflow: scroll;">  
+					<%=tn%></div></td></tr>--></table></td>
+<td>&nbsp;</td></tr></table>
+<!--Campos--><!--Tabla--></table>
+<!--#include file="../manifiestos/bottom.asp" -->
+</form>
+<div align="center"></div>
+
+<div align="center"></div>
+</body>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
