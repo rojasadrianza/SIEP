@@ -19,6 +19,7 @@
 'CONEXION ADO -- HUMBERTO ROJAS
 'Option Explicit
 'Se declaran las variables
+'Prueba
 Dim Conexion
 Dim Cadena
 Dim Rutafisica
