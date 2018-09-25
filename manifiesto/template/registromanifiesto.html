@@ -1,0 +1,1252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+<title>Crear Manifiesto</title>
+<!--
+-- firefox--
+*{-moz-box-sizing: border-box;box-sizing: border-box}
+p{margin-top:0px;margin-bottom:1em}
+form{margin:0px}
+input{padding:1px}
+
+-->
+<style type="text/css">
+<!--
+.Estilo1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color: #FFFF00;
+}
+
+.Estilo3 {font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	text-align: justify;
+	color: #575969;
+}	
+.Estilo4 {font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	text-align: justify;
+	color: #fd5004;
+}
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+a:link {
+	color: #FFFFFF;
+}
+a:visited {
+	color: #FFFFFF;
+}
+a:hover {
+	color: #FFFFFF;
+}
+a:active {
+	color: #FFFFFF;
+}
+.Estilo25 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+}
+.Estilo29 {font-size: 14}
+.Estilo16 {	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+.Estilo98 {
+	color:#FFBF00
+}
+
+.Estilo31 {font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; color: #FFFFFF; }
+.Estilo32 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+	color: #57595b
+}
+}
+.style2 {font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; color: #000000; }
+.style3 {color: #FF0000}
+.style4 {font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; color: #000000; }
+.style5 {font-size: 14px}
+.style8 {color: #FF8811}
+
+input[type="text"] { 
+  font-family: 'Arial', serif; 
+  color: #000000; 
+  font-size: 13px;  
+  background-color: #91e1fa; 
+}
+
+.style1 {
+	font-family: Verdana;
+	color: #000000;
+	font-size: 10px;
+	text-align: left;
+}
+
+select { 
+  font-family: 'Arial', serif; 
+  color: #000000; 
+  font-size: 13px;  
+  background-color: #91e1fa; 
+}
+select.c1 { 
+  font-family: 'Arial', serif; 
+  color: #000000; 
+  font-size: 13px;  
+  background-color: #91e1fa;
+  width:170px; 
+}
+
+-->
+</style>
+<link rel="stylesheet" href="../css/estilo_autogest.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="../css/jquery-ui.css">
+<!--<script src="../Scripts/AC_RunActiveContent.js" type="text/javascript"></script>-->
+<script type="text/javascript">
+
+
+       
+
+
+	function buscar()
+	{
+		if(document.forms["form1"].elements["camp_busc"].value != "")
+		{
+			document.form1.action = document.forms["form1"].elements["dir_pag_bus"].value;	
+			document.form1.submit();
+			//alert(document.forms["form1"].elements["dir_pag_bus"].value + "?b=1");
+		}
+		else
+		{
+			alert("Por favor introduzca el nombre del pasajero que desea buscar");
+		}
+	}	
+	//HUMBERTO ROJAS 2018
+	function validarTipoBusqueda()
+	{
+	  var busquedaPas = document.forms["form1"].elements["busquedaPas"].value;
+	  var busquedaTrip = document.forms["form1"].elements["busquedaTrip"].value;
+	 
+	  
+	  if (busquedaPas != "" ){
+ //alert("busquedaPas " + busquedaPas);	  
+	      document.forms["form1"].elements["verpas"].value = 1;
+	      document.forms["form1"].elements["vertrip"].value = 0;
+	  }else if (busquedaTrip != "" ){
+//alert("busquedaTrip " + busquedaTrip);	  
+	            document.forms["form1"].elements["verpas"].value = 0;
+	            document.forms["form1"].elements["vertrip"].value = 1;
+	  }
+	
+	}
+	
+	
+	function busPas()
+	{	
+             validarTipoBusqueda();			 
+	         var largo = document.forms["form1"].elements["busquedaPas"].value;
+             var largo2 = document.forms["form1"].elements["busquedaTrip"].value; 
+  
+             var n = largo.length;
+             var n2 = largo2.length;  
+
+	     var e = window.event;		 
+		 if (e.keyCode == 13){
+                    if (n > 2 || n2 > 2){
+		       document.form1.submit();
+                    }else{
+                       alert("Ingrese un valor de bùsqueda de mayor tamaño");
+                    }
+
+	     }	
+	}
+	
+
+	function submit() {
+
+
+               validarTipoBusqueda();
+               var largo = document.forms["form1"].elements["busquedaPas"].value;
+               var largo2 = document.forms["form1"].elements["busquedaTrip"].value; 
+  
+               var n = largo.length;
+               var n2 = largo2.length; 
+	
+	     
+		var x = document.getElementById("selecpas");	
+		
+		var i;
+		for (i = 0; i < x.length; i++) {														
+			document.forms["form1"].elements["selecpasinput"].value = document.forms["form1"].elements["selecpasinput"].value + x.options[i].value + ',';						
+			
+		}
+													
+		
+		var x2 = document.getElementById("selec");	
+        
+		var i2;
+		for (i2 = 0; i2 < x2.length; i2++) {														
+			document.forms["form1"].elements["selectripinput"].value = document.forms["form1"].elements["selectripinput"].value + x2.options[i2].value + ',';						
+			
+		}
+
+                if (n > 2 || n2 > 2){
+		   document.form1.submit();
+                }else{
+                    alert("Ingrese un valor de bùsqueda de mayor tamaño");
+                }
+		
+		
+	}	
+	
+	//FIN HUMBERTO ROJAS 2018
+
+	/*function abc(){
+		alert(document.forms["form1"].elements["num_pas_bd"].value);
+		alert(document.forms["form1"].elements["num_tri_bd"].value);
+		var cant_pasaj = document.forms["form1"].elements["num_pas_bd"].value;
+		var cant_trip = document.forms["form1"].elements["num_tri_bd"].value;
+		for (var j = 1;  j <= cant_pasaj; j++){
+			alert(document.forms["form1"].elements["pas_hid_" + j].value);
+			alert(document.forms["form1"].elements["pas_" + j].checked);
+		}
+		for (var j = 1;  j <=  cant_trip; j++){
+			alert(document.forms["form1"].elements["tri_hid_" + j].value);
+			alert(document.forms["form1"].elements["tri_" + j].checked);
+		}
+	}*/
+	function xyz()
+	{
+		//document.forms["form1"].elements["aerop_lleg"].value = reinterpretar(document.forms["form1"].elements["aerop_lleg"].value);
+		//document.forms["form1"].elements["aerop_orig"].value = reinterpretar(document.forms["form1"].elements["aerop_orig"].value);
+		var h = "";
+		var t = "";
+		var z = document.forms["form1"].elements["aerop_orig"].value;
+		for(i=0;i<z.length; i++)
+		{
+			if((z.charAt(i)+z.charAt(i+1))=="Ã¡")
+			{
+				t = t + "á";
+				i++;
+			}
+			else if((z.charAt(i)+z.charAt(i+1))=="Ã±")
+			{
+				t = t + "ñ";
+				i++;
+			}
+			else
+			{
+				t = t + z.charAt(i);
+			}
+		}
+		document.forms["form1"].elements["aerop_orig"].value = t;
+	}
+	
+	function chk_pasj(elem){
+		var t = elem.split("_");
+		//DiferenciaFechas (CadenaFecha1, CadenaFecha2, salida);
+		//alert(document.forms["form1"].elements["fec_nac_pasa_" + t[1]].value);
+		//if (document.forms["form1"].elements["fec_nac_pasa_" + t[1]].value != "")
+		var fech_nac;
+		fech_nac = document.forms["form1"].elements["fec_nac_pasa_" + t[1]].value;
+		//if(DiferenciaFechas(document.forms["form1"].elements["fecha_actual"].value, fech_nac, "d")>=1095)
+		if(DiferenciaFechas(document.forms["form1"].elements["fecha_actual"].value, fech_nac, "d")>=0){
+			if(document.forms["form1"].elements[elem].checked == true)
+				document.forms["form1"].elements["num_pas"].value++;
+			else
+				document.forms["form1"].elements["num_pas"].value--;
+			//var tripulacion = document.forms["form1"].elements["num_tri"].value;
+			var pasajeros = document.forms["form1"].elements["num_pas"].value;
+			var total = parseInt(tripulacion) + parseInt(pasajeros);
+			document.forms["form1"].elements["num_per"].value = total;
+		}
+	}
+	
+	/*function chk_trip(elem){
+		if(document.forms["form1"].elements[elem].checked == true)
+			document.forms["form1"].elements["num_tri"].value++;
+		else
+			document.forms["form1"].elements["num_tri"].value--;
+		var tripulacion = document.forms["form1"].elements["num_tri"].value;
+		var pasajeros = document.forms["form1"].elements["num_pas"].value;
+		var total = parseInt(tripulacion) + parseInt(pasajeros);
+		document.forms["form1"].elements["num_per"].value = total;
+	}*/
+	
+	function verificaFec(CadenaFecha1, CadenaFecha2, salida)
+	{
+		var rta;
+		if(document.forms["form1"].elements["manifiesto_nuevo"].value == "1")
+		{
+			rta = DiferenciaFechas(CadenaFecha1, CadenaFecha2, salida);
+		}
+		if(document.forms["form1"].elements["manifiesto_nuevo"].value == "0")
+		{
+			rta = 1;
+		}
+		return rta;
+	}
+
+	function verifHrs(hSalida, hhoy){
+		var rta;
+		if(document.forms["form1"].elements["manifiesto_nuevo"].value == "1")
+		{
+			rta = dif_horas2(hSalida, hhoy);
+		}
+		if(document.forms["form1"].elements["manifiesto_nuevo"].value == "0")
+		{
+			rta = 1;
+		}
+		return rta;
+	}
+	
+	function changeLabeltext()
+	{
+		alert("www");
+		//document.getElementById("id_1").value = "new text value";
+		document.forms["form1"].elements["nomp"].value = "new text value";
+	}
+	
+
+	function verifHrs2(hSalida){
+		var rta;
+		//var w = hSalida.replace(" ", ":");
+		//var hrsx = w.split(":");
+		var hrsx = hSalida.split(":");
+		var t = 0;
+		var h = 0;
+		for(j=0; j < hrsx.length; j++)
+		{
+			if (hrsx[j] == "--")
+				h = 1;
+			else
+				h = 0;
+			t = t + h;
+		}
+		if(t == 2)
+		{
+			rta = 1;	
+		}
+		if(t < 2)
+		{
+			rta = -1;
+		}
+		if(t == 0)
+		{
+			if(document.forms["form1"].elements["manifiesto_nuevo"].value == "1")
+			{
+				rta = dif_horas4(hSalida);
+			}
+			if(document.forms["form1"].elements["manifiesto_nuevo"].value == "0")
+			{
+				rta = 1;
+			}
+		}
+		return rta;
+	}
+	
+	function revFormaHora(hSalida)
+	{
+		var rta;
+		//var w = hSalida.replace(" ", ":");
+		//var hrsx = w.split(":");
+		var hrsx = hSalida.split(":");
+		var t = 0;
+		var h = 0;
+		for(j=0; j < hrsx.length; j++)
+		{
+			if (hrsx[j] == "--")
+				h = 1;
+			else
+				h = 0;
+			t = t + h;
+		}
+		if(t == 0)
+		{
+			rta = 1;
+		}
+		if(t == 2)
+		{
+			rta = 1;	
+		}
+		if((t > 0)&&(t < 2))
+		{
+			rta = -1;
+		}
+		return rta;	
+	}
+	
+	function selecciona() { 
+	    
+    } 
+	
+	function envia(){
+		
+		selecciona();
+		
+		var err_trip = 0
+		var err_trip2 = 0
+		var err_trip3 = 0
+		var pic = 1;
+		var cop = 0;
+		//var camp = 'aerop_orig|fec_salida|aerop_lleg|fec_llegada|num_per_tot';
+		//var ast = 'ast_aerop_origen|ast_fec_salida|ast_aerop_lleg|ast_fec_llegada|ast_num_per_tot';
+		var camp = 'aerop_orig|fec_salida|aerop_lleg|num_per_tot';
+		var ast = 'ast_aerop_origen|ast_fec_salida|ast_aerop_lleg|ast_num_per_tot';
+		var hor_salida = document.forms["form1"].elements["hor_salida"].value + ":" + document.forms["form1"].elements["min_salida"].value;
+
+		var vali = '¬|¬|¬|¬|¬';
+		
+		
+		
+		
+		
+		if (verifica2(camp, ast, vali, '|', "form1") == false){		
+			alert("Los campos con el '*' no pueden estar vacios");
+		}
+		else{
+			/*var list_tri = document.forms["form1"].elements["num_tri_bd"].value;
+			for (var z = 1; z <= list_tri; z++){
+				if ((document.forms["form1"].elements["tri_" + z].checked == true)&&(document.forms["form1"].elements["tri_hid_" + z].value == document.forms["form1"].elements["pic_list"].value)){
+					err_trip++;
+				}
+				if ((document.forms["form1"].elements["tri_" + z].checked == true)&&(document.forms["form1"].elements["tri_hid_" + z].value == document.forms["form1"].elements["copic_list"].value)){
+					err_trip2++;
+				}
+			}*/
+			if (document.forms["form1"].elements["pic_list"].value == document.forms["form1"].elements["copic_list"].value)
+			{
+				err_trip3++;	
+			}
+			var f_hoy = document.forms["form1"].elements["fecha_actual"].value;
+			var h_hoy = document.forms["form1"].elements["hora_actual"].value;
+			var f_sal = document.forms["form1"].elements["fec_salida"].value;
+			//var f_lleg = document.forms["form1"].elements["fec_llegada"].value;
+			var h_sal = document.forms["form1"].elements["hor_salida"].value;
+			//var h_lleg = document.forms["form1"].elements["hor_llegada"].value;
+			if (err_trip > 0){
+				alert("Un piloto no puede ser tripulación"); //***********************************REVISAR
+				err_trip = 0;
+			}
+			else if(err_trip2 > 0){
+				alert("Un copiloto no puede ser tripulación"); //***********************************REVISAR
+				err_trip2 = 0;
+			}
+			else if(err_trip3 > 0){
+				alert("Un copiloto no puede ser piloto al mismo tiempo y viceversa");
+				err_trip3 = 0;
+			}
+			else{
+				if((revFormaHora(hor_salida) == -1) && (document.forms["form1"].elements["manifiesto_nuevo"].value == "0"))
+				{
+					alert("Por favor revisar la hora de salida (" + document.forms["form1"].elements["hor_salida"].value + ":" + document.forms["form1"].elements["min_salida"].value + ")");
+				}
+				else
+				{
+					if (verificaFec(f_sal, f_hoy, "s")<0) //Creado y comentado por Ismar porque al momento de editar un manifiesto entraba esta validación y no permitía modificar un manifiesto
+					{
+						alert("La fecha de salida no puede ser menor que la fecha de hoy");
+					}
+					else 
+					{		//Se comenta esta línea en caso de cambios (para esta verificación se usan recursos del servidor
+						//para la línea de abajo se usan recursos del cliente)
+						//if ((verificaFec(f_sal, f_hoy, "s")==0) && (verifHrs(hor_salida,document.forms["form1"].elements["hora_actual"].value)<0))
+						if ((verificaFec(f_sal, f_hoy, "s")==0) && (verifHrs2(hor_salida)<0))
+							{	
+								//if ((document.forms["form1"].elements["hor_salida"].value == "--") || (document.forms["form1"].elements["min_salida"].value == "--") || (document.forms["form1"].elements["am_pm_sal"].value == "--"))
+								if ((document.forms["form1"].elements["hor_salida"].value == "--") || (document.forms["form1"].elements["min_salida"].value == "--"))
+									alert("Por favor revisar la hora de salida (" + document.forms["form1"].elements["hor_salida"].value + ":" + document.forms["form1"].elements["min_salida"].value + ")");
+								else
+									alert("La hora de salida no puede ser menor que la hora actual");
+							}	
+						else
+						   
+							{
+								//if (DiferenciaFechas(f_lleg, f_sal, "s")<0)
+								//	alert("La fecha de llegada no puede ser menor que la fecha de salida");
+								//else if((DiferenciaFechas(f_lleg, f_sal, "s")==0) && (dif_horas(h_lleg,h_sal)<0))
+								//		alert("La hora de llegada no puede ser menor que la hora de salida");
+								//	 else
+								//		{
+											if (document.forms["form1"].elements["aerop_orig"].value == document.forms["form1"].elements["aerop_lleg"].value)
+												{
+													alert("El aeropuerto de salida debe ser diferente del de llegada");
+												}
+											else
+												{
+													a = 0;
+													if (a == 0){
+														//alert("Por favor seleccione un miembro de la tripulación");
+													//else{
+														//document.forms["form1"].action = "registromanifiesto_guar.asp";
+														//document.forms["form1"].submit();
+														var a_orig = 0;
+														var a_lleg = 0;
+														for(var j =0; j < aeropuertos.length; j++){
+															var w = aeropuertos[j].split(String.fromCharCode(30))
+															if (document.forms["form1"].elements["aerop_orig"].value==w[1])
+															a_orig++;
+														}
+														for(var j =0; j < aeropuertos.length; j++){
+															var w = aeropuertos[j].split(String.fromCharCode(30))
+															if (document.forms["form1"].elements["aerop_lleg"].value==w[1])
+															a_lleg++;
+														}
+														if((a_orig > 0)&&(a_lleg > 0)){
+															if(document.forms["form1"].elements["pic_list"].value > 0){
+															
+															//"num_per"
+									if (document.forms["form1"].elements["copic_list"].value > 0){
+		
+										cop = 1;					
+																 
+																 	
+									}						         if (document.forms["form1"].elements["pic_list"].value != ""){
+                                                                                                                                   piloto = 1;
+                                                                                                                                 }else{  
+																   piloto = 0;
+                                                                                                                                 }
+
+                                                                                                                                 if (document.forms["form1"].elements["copic_list"].value != ""){
+                                                                                                                                   copiloto = 1;
+                                                                                                                                 }else{  
+																   copiloto = 0;
+                                                                                                                                 }
+
+															         if (document.forms["form1"].elements["canttrip"].value != ""){
+                                                                                                                                   tripulacion = document.forms["form1"].elements["canttrip"].value;
+                                                                                                                                 }else{  
+																   tripulacion = 0;
+                                                                                                                                 }
+
+																 if (document.forms["form1"].elements["cantpas"].value != ""){
+                                                                                                                                   pasajeros = document.forms["form1"].elements["cantpas"].value;
+                                                                                                                                 }else{  
+																   pasajeros = 0;
+                                                                                                                                 }
+
+																 totales = parseInt(piloto) + parseInt(copiloto) + parseInt(tripulacion) + parseInt(pasajeros);
+																 
+
+
+
+
+                                                                                        					 //alert("TOTAL " + document.forms["form1"].elements["num_per_tot"].value);
+																 //alert("CANTIDAD TRIPULACION " + document.forms["form1"].elements["canttrip"].value);
+																 //alert("CANTIDAD PASAJEROS " + document.forms["form1"].elements["cantpas"].value);
+                                                                                                                                 //alert("piloto " + piloto);
+ 																 //alert("totales " + totales);	
+
+															
+																if(document.forms["form1"].elements["num_per_tot"].value != totales ){
+																	
+																
+																	
+																	alert("El n\u00FAmero de personas registradas y las que deben registrarse no concuerdan. Revise los datos ");
+																	}
+																else{ 
+																	//num_pas = campo_readonly("num_pas", "text", "num_pas", "3", "2", "9", num_pasr, "readonly", "")
+																	//num_tri = campo_readonly("num_tri", "text", "num_tri", "3", "2", "10", tripu, "readonly", "")
+																	//document.forms["form1"].elements["aerop_lleg"].value = reinterpretar(document.forms["form1"].elements["aerop_lleg"].value);
+																	//document.forms["form1"].elements["aerop_orig"].value = reinterpretar(document.forms["form1"].elements["aerop_orig"].value);
+																	var tot_personas = document.forms["form1"].elements["num_per_tot"].value;
+																		if (tot_personas <= 60)
+																		{	
+																			
+																			
+										            document.forms["form1"].elements["selecpasinput"].value = "";
+													var x = document.getElementById("selecpas");													
+													var i;
+													for (i = 0; i < x.length; i++) {														
+														document.forms["form1"].elements["selecpasinput"].value = document.forms["form1"].elements["selecpasinput"].value + x.options[i].value + ',';						
+														
+													}
+													
+													document.forms["form1"].elements["selectripinput"].value = "";
+													var x2 = document.getElementById("selec");													
+													var i2;
+													for (i2 = 0; i2 < x2.length; i2++) {														
+														document.forms["form1"].elements["selectripinput"].value = document.forms["form1"].elements["selectripinput"].value + x2.options[i2].value + ',';						
+														
+													}
+													
+													
+													
+													
+													
+						
+																			
+										//alert(document.forms["form1"].elements["selecpasinput"].value);									
+																			
+		
+																			document.forms["form1"].action = "registromanifiesto_guar.asp";
+																			document.forms["form1"].submit();
+																		}
+																		else
+																		{
+																			alert("El total de tripulantes y pasajeros deben ser menor de sesenta personas(60)");	
+																		}
+																	}
+															}
+															else
+																alert("No hay piloto disponible");
+															}
+														else
+															alert("Revise el aeropuerto de salida y/o llegada"); 
+														}
+													}
+											}
+									}
+							}									
+					}
+				}
+	}
+	
+	function chk_marcad(busq, pasaj, num_pasaj, nom1, nom2)
+	{
+		if(busq != "")
+		{
+    
+			if(pasaj.indexOf("|")==-1)
+			{
+				for(var j = 1; j <= num_pasaj; j++)
+				{
+					if(pasaj ==  document.forms["form1"].elements[nom1 + j].value)
+					{
+						document.forms["form1"].elements[nom2 + j].checked = true;
+					}
+				}
+			}
+			else
+			{
+				var arr_pas = pasaj.split("|");
+				for(var k = 0; k < arr_pas.length; k++)
+				{
+					for(var z = 1; z <= num_pasaj; z++)
+					{
+						if(arr_pas[k] ==  document.forms["form1"].elements[nom1 + z].value)
+						{
+							document.forms["form1"].elements[nom2 + z].checked = true;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	function cargar()
+	{
+		var pasaj = document.forms["form1"].elements["pasa_mar_bus"].value;
+		var tripu = document.forms["form1"].elements["trip_mar_bus"].value;
+		var num_pasaj = document.forms["form1"].elements["num_pas_bd"].value;
+		var num_tri = document.forms["form1"].elements["num_tri_bd"].value;
+		var busq = document.forms["form1"].elements["busqueda"].value;
+		if(document.forms["form1"].elements["modifica"].value != "-")
+			document.forms["form1"].elements["copic_list_rev"].value = document.forms["form1"].elements["copic_list"].value;
+		chk_marcad(busq, pasaj, num_pasaj, "pas_hid_", "pas_");
+		chk_marcad(busq, tripu, num_tri, "tri_hid_", "tri_");
+
+                //alert(document.forms["form1"].elements["copic_list"].value);
+	}
+
+	
+	function copic()
+	{
+		if((document.forms["form1"].elements["copic_list"].value != 0)&&(document.forms["form1"].elements["copic_list_rev"].value == 0)){
+			 document.forms["form1"].elements["num_tri"].value++;
+			 document.forms["form1"].elements["num_per"].value++;
+			 document.forms["form1"].elements["copic_list_rev"].value = document.forms["form1"].elements["copic_list"].value;
+		}
+		if((document.forms["form1"].elements["copic_list"].value == 0)&&(document.forms["form1"].elements["copic_list_rev"].value != 0))
+		{
+			document.forms["form1"].elements["copic_list_rev"].value = 0;
+			document.forms["form1"].elements["num_tri"].value--;
+			document.forms["form1"].elements["num_per"].value--;
+		}
+	}
+</script>
+<link rel="stylesheet" type="text/css" href="../js/jquerycssmenu.css" />
+<style type="text/css">
+.Estilo11 {font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color: #00aff2;
+}
+.Estilo311 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	color: #00aff2;
+	text-align: center;
+}
+.Estilo321 {	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	text-align: justify;
+	color: #000000;
+	font-weight: normal;
+}
+.Estilo312 {	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #00aff2;
+	text-align: left;
+}
+.Estilo31 {
+	color: #575969;
+	font-size: 13px;
+}
+.Estilo313 {font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; color: #FFFFFF; }
+.Estilo313 {	color: #575969;
+	font-size: 13px;
+}
+.Estilo32Copia {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #57595b
+}
+.SIGLAS {
+	font-size: 20px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.nobord { 
+	 border-style: solid; border-width: 0; padding: 0 }
+	 
+.nobord2 {
+	 height:40px;
+	 font-weight: bold;
+	 border: none;
+	 border-color: transparent; 
+	 background-color:#FCF5D8}
+</style>
+<script src="Scripts/AC_RunActiveContent.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquerycssmenu.js"></script>
+
+
+
+<script src="../js/jquery-1.10.2.min.js"></script>
+<script src="../js/jquery.dataTables.js"></script>
+<script src="../js/jquery-ui.js"></script>
+
+
+  
+ 
+  
+ 
+
+
+
+
+
+<script>
+ $(function() {
+        $( "#tabs" ).tabs();
+        });
+
+$(document).ready(function() {
+	
+		
+	 
+	  
+	  //-------------------------------------------------------------
+	    
+		var selected = [];	  
+	  
+		  
+		var table = $("#table_id").DataTable({  
+		stateSave: true,
+        "processing": true,
+        "serverSide": false,
+		"displayStart": 2,
+		"searching": false,
+		"order": [[ 1, "asc" ]],		
+		"stateLoadCallback": function (settings) {
+		var o;
+	 
+		// Send an Ajax request to the server to get the data. Note that
+		// this is a synchronous request since the data is expected back from the
+		// function
+		$.ajax( {
+		  "url": "/state_load",
+		  "async": false,
+		  "dataType": "json",
+		  "success": function (json) {
+			o = json;
+		  }
+		} );
+	 
+		return o;
+	  },
+		
+		
+				
+        "rowCallback": function( row, data ) {
+            if ( $.inArray(data.DT_RowId, selected) !== -1 ) {
+                $(row).addClass('selected');
+            }
+        }
+        });
+		
+		var data = table
+        .rows()
+        .data();
+		
+		$('#table_id tbody').on('click', 'tr', function () {
+        var id = this.id;
+        var index = $.inArray(id, selected);		
+		var tr = $(this).parents('tr').data(); 
+	    var data = table.row( this ).data();
+		var ok = 0;
+		
+		
+		$("#selec option").each(function(){        
+		  if (data[0] == $(this).attr('value')){		  
+		     ok = 1;
+		  }		  
+         });
+		 
+		 
+		 if (ok == 0){
+			 
+			 $('#selec').append($('<option>', { 
+			   value:data[0],
+			   text :data[1] +' '+ data[2] 
+			  }));
+			  
+			  $('#canttrip').val(parseInt($('#canttrip').val()) + 1);
+		 } else {
+			 
+			  $("#selec option[value='"+data[0]+"']").remove();
+			  $('#canttrip').val(parseInt($('#canttrip').val()) - 1);
+			 	
+		 }	
+		   
+		
+		    
+        if ( index === -1 ) {
+            selected.push( id );
+			
+			
+        } else {
+			
+					
+			
+			 selected.splice( index, 1 );
+			
+        }
+ 
+        $(this).toggleClass('selected');
+        } );
+	  
+	  
+	  //-------------------------------------------------------------	 
+	    var selected2 = [];	  
+	  
+		  
+		var table2 = $("#table_id_pas").DataTable({  
+		stateSave: true,		
+        "processing": true,
+        "serverSide": false,
+		"searching": false,
+		"order": [[ 1, "asc" ]],
+        "rowCallback": function( row, data ) {
+            if ( $.inArray(data.DT_RowId, selected2) !== -1 ) {
+                $(row).addClass('selected');
+            }
+        }
+        });
+		
+		var data = table2
+        .rows()
+        .data();
+		
+		$('#table_id_pas tbody').on('click', 'tr', function () {
+        var id = this.id;
+        var index = $.inArray(id, selected);		
+		var tr = $(this).parents('tr').data(); 
+	    var data2 = table2.row( this ).data();
+		var ok = 0;
+		
+		
+		$("#selecpas option").each(function(){        
+		  if (data2[0] == $(this).attr('value')){		  
+		     ok = 1;
+		  }		  
+         });
+		 
+		 
+		 if (ok == 0){
+			 
+			 $('#selecpas').append($('<option >', { 
+			   value:data2[0],
+			   text :data2[1] +' '+ data2[2]
+			  }));
+			  
+			   
+			  
+			  $('#cantpas').val(parseInt($('#cantpas').val()) + 1); 			  
+			  
+             // $('#selecpasinput').val($('#selecpasinput').val() + data2[0] + ',');
+			  
+			  
+		 } else {
+			 
+			  $("#selecpas option[value='"+data2[0]+"']").remove();
+			  $('#cantpas').val(parseInt($('#cantpas').val()) - 1);
+			  
+			  
+			  
+			  
+			 	
+		 }	
+		   
+		
+		    
+        if ( index === -1 ) {
+            selected.push( id );
+			//$('#cantpas').val(parseInt($('#cantpas').val()) + 1);*/
+			
+        } else {
+			
+			//$("#selecpas option[value='"+data2[0]+"']").remove();			
+			
+			 selected.splice( index, 1 );
+			
+        }
+ 
+        $(this).toggleClass('selected');
+        } );
+	  
+	  
+	  
+	     
+	  
+	  
+	  
+	
+	
+	
+} );
+
+
+
+
+
+
+
+</script>
+
+
+</head>
+<body onLoad="<%=carga%>">
+<form name="form1" method="post" action="">
+<input type='hidden' id = 'vertrip' name='vertrip' value=0> 
+<input type='hidden' id = 'verpas' name='verpas' value=0>  
+
+<table width="839" height="100" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr><%=thidden%>
+    <td colspan="8" bgcolor="#29AAE3">
+        <div align="center"><img src="../imagenes/top_manifiesto.jpg" alt="Piernaslibres - SIEP - Pagos " width="840" height="222" /></div>
+      </td>
+  </tr>
+  <tr>
+    <td colspan="8" bgcolor="#29AAE3"><!--#include file="../manifiestos/enlaces.asp" --></td>
+  </tr>
+</table>
+<table width="840" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor='f5fcf0'>
+  <tr>
+    <td colspan="3" bgcolor="#f5fcf0">&nbsp;</td>
+  </tr>
+  <tr bgcolor="#f5fcf0">
+    <td>&nbsp;</td>
+    <td colspan="2" align="left"><%=Nom_cli%></td>
+  </tr>
+  <tr bgcolor="#f5fcf0">
+    <td colspan="3">&nbsp;</td>
+  </tr>
+  <tr bgcolor="#f5fcf0">
+    <td width="36">&nbsp;</td>
+    <td colspan="2" align="left"><span class="Estilo11">Manifiesto</span></td>
+  </tr>
+  <tr bgcolor="#f5fcf0">
+    <td>&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3" align="center" bgcolor="#f5fcf0"><table width="771" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+            <td><span class="Estilo3">A trav&eacute;s de esta p&aacute;gina podr&aacute;s 
+              ingresar los datos necesarios para el registro del manifiesto de 
+              tu vuelo, teniendo en cuenta que la aeronave, tripulaci&oacute;n 
+              y pasajeros ya hayan sido registrados previamente en sus p&aacute;ginas 
+              correspondientes. Recuerda que el sistema te mostrar&aacute; en 
+              dos listas los nombres de la tripulaci&oacute;n y de pasajeros registrados,&nbsp; 
+              all&iacute; podr&aacute;s asignarlos solo con un clic a el manifiesto.<br />
+              De igual forma el sistema emitir&aacute; advertencias si existe 
+              un documento registrado vencido o por vencerse ya sea este de pasajero 
+              o de tripulaci&oacute;n e impedir&aacute; usar al mismo para un 
+              vuelo, hasta que dicha fecha de expiraci&oacute;n no sea cambiada. 
+              Al final podr&aacute;s obtener un documento que podr&aacute;s imprimir 
+              o enviar por correo al aeropuerto solicitante.<br />
+              <strong>NOTA IMPORTANTE </strong> Es necesario que registre toda 
+              la información de sus aeronaves, pasajeros y tripulación para poder 
+              usarla en la creación de un manifiesto y así, generar los documentos 
+              de plan de vuelo, general declaration y tarjetas de migración según 
+              el vuelo amerite.</span></td> 
+        </tr>
+    </table></td>
+    </tr>
+  <tr>
+    <td colspan="3" bgcolor="#f5fcf0">&nbsp;&nbsp;</td>
+  </tr>
+  <tr>
+    <td bgcolor="#f5fcf0">&nbsp;</td>
+    <td width="769" align="center" bgcolor="#f5fcf0" class="Estilo311"><%=titulo_central%></td>
+    <td width="35" bgcolor="#f5fcf0">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="3" bgcolor="#f5fcf0">&nbsp;</td>
+    </tr>
+  <tr>
+    <td height="21" colspan="3" bgcolor="#f5fcf0"><table width="840" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="15">&nbsp;</td>
+        
+        <div style="margin-left:8px;"><span><b><%=manif%></b> </span> </div>
+       
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="4" align="left" valign="top"><table width="811" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="60">&nbsp;</td>
+            <td width="122"><span class="Estilo25">Aeronave</span><span class="Estilo98">*</span></td>
+            <td colspan="4"><%=aeronav%></td>
+            </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="4">&nbsp;</td>
+            </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><span class="Estilo25">Aerop. 
+              Salida</span><span class="Estilo98">&nbsp;*</span></td>
+            <td colspan="4"><div id="autosuggest"><ul></ul></div><!--<input type="text" name="textfield" />-->
+              <%=aerop_orig%><%=ast_aerop_orig%>
+              <!--#include file="../js/list_autogest_airp.js" --></td>
+            </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="4"><table width="627" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="78"><span class="style1">Siglas:<%=sig_1%><!--<input type="text" readonly="readonly" id="sig_1" name="sig_1" class="nobord2" style="background-color:transparent;">--></span> <br /></td>
+                <td width="12">&nbsp;</td>
+                <td width="537"><span class="style1">Nombre Aeropuerto:<%=nom_1%><!--<input type="text" readonly="readonly" id="nom_1" name="nom_1" class="nobord2" style="background-color:transparent;">--></span></td>
+                <script language="JavaScript">new AutoSuggest(document.getElementById('aerop_orig'),document.getElementById('sig_1'),document.getElementById('nom_1'),aeropuertos);</script>
+                </tr>
+              </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="4"></td>
+          </tr>
+          <tr>
+  <td>&nbsp;</td>
+  <td><span class="Estilo25">Aerop. 
+    Llegada</span><span class="Estilo98">&nbsp;*</span></td>
+            <td colspan="4"><!--<input type="text" name="textfield" />-->
+              <%=aerop_lleg%><%=ast_aerop_lleg%>
+            </td>            </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="4"><table width="627" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="78"><span class="style1">Siglas:<%=sig_2%><!--<input type="text" readonly="readonly" id="sig_2" name="sig_2" class="nobord2" style="background-color:transparent;">--></span> <br /></td>
+                <td width="12">&nbsp;</td>
+                <td width="537"><span class="style1">Nombre Aeropuerto:<%=nom_2%><!--<input type="text" readonly="readonly" id="nom_2" name="nom_2" class="nobord2" style="background-color:transparent;">--></span></td>
+              	<script language="javascript" type="text/javascript">new AutoSuggest(document.getElementById('aerop_lleg'),document.getElementById('sig_2'),document.getElementById('nom_2'),aeropuertos);</script>
+               </tr>
+            </table></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="4">&nbsp;</td>
+            </tr>
+          <tr>
+  <td>&nbsp;</td>
+  <td><span class="Estilo25">Fecha salida</span> <span class="Estilo98">*</span></td>
+            <td width="234"><%=fec_salida%><%=cal%><%=ast_fec_salida%></td>
+            <td width="14">&nbsp;</td>
+<td width="95"><span class="Estilo25">E.T.D </span><span class="Estilo98">&nbsp;*</span><br/>
+    <span class="style1">(HH:MM)</span></td>
+            <td width="286" colspan="4"><%=hor_salida%><%=reloj%><%=ast_hor_salida%>&nbsp;<span class="style1">Formato 24 horas</span></td>
+            </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td colspan="4">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="2"></td>
+            <td colspan="4"></td>
+            </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><span class="Estilo25">Personas 
+a <br />
+bordo</span><span class="Estilo98">&nbsp;*</span></td>
+            <td colspan="4"><%=num_per_tot%><%=ast_num_per_tot%></td>
+            </tr>
+          <tr>
+            <td colspan="2"><!--span class="Estilo25">Personas a bordo</span--></td>
+            <td colspan="4"></td>
+            </tr>
+          <tr>
+            <td colspan="2">&nbsp;</td>
+            <td colspan="4"><%=num_per%></td>
+            </tr>
+          </table></td>
+        <td>&nbsp;</td>
+      </tr>
+      
+      
+      
+      
+      
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="4" bgcolor="#91E1FA"><span class="Estilo312">Personas a Bordo</span></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="4">&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      
+      
+       <tr>
+        <td>&nbsp;</td>
+      
+        
+      
+      <td colspan="4"><%=selec%></td>
+      
+       <td>&nbsp;</td>
+      </tr>
+      
+      
+       <!--<tr>
+        <td>&nbsp;</td>
+          <%'= tn%>
+          <%'= tn_pas%>
+         <td>&nbsp;</td>
+        
+      </tr>--> 
+	  
+	  
+	  
+	  
+	  
+	  
+      
+      
+      <tr>
+          <td>&nbsp;</td>
+            <td style="width:100%;">
+                <div id="tabs" style="width:900px; margin-top:10px;">
+                    <ul>
+                                               						
+											
+                        <% if vertrip = 1 then %>
+						  <li aria-selected="false" aria-expanded="false" class="ui-state-default ui-corner-top"><a href="#tabs-2">Pasajeros</a></li>
+                          <li aria-selected="true" aria-expanded="true" class="ui-state-default ui-corner-top ui-tabs-active ui-state-active"><a href="#tabs-1">Tripulacion</a></li>
+                        <% else%>
+						  <li aria-selected="true" aria-expanded="true" class="ui-state-default ui-corner-top ui-tabs-active ui-state-active"><a href="#tabs-2">Pasajeros</a></li> 
+                          <li aria-selected="false" aria-expanded="false" class="ui-state-default ui-corner-top"><a href="#tabs-1">Tripulacion</a></li>
+                        <% end if%> 
+                                      
+                     </ul>
+                   <div id="tabs-2"> 
+				   
+				      <%'SOLO PARA PRUEBA *******************BORRAR
+					     'bus_pas = ""
+					     'tn_pas = ""
+						 'bus_trip = ""
+					     'tn = ""
+					  %>
+				   
+				   
+				   
+				      <%= bus_pas%>
+                      <%= tn_pas%>
+                   </div>   
+                   <div id="tabs-1"> 
+				     <%= bus_trip%>
+                     <%= tn%>
+                   </div>  
+                   
+                </div>
+            </td>
+           <td>&nbsp;</td>
+      </tr>  
+	  
+	  
+	  
+	  
+	  
+	  
+      
+      
+      
+      
+      
+        
+        <!---->
+       
+        
+        
+      
+      
+      
+     
+      
+      
+      
+      
+      
+      
+      
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="4" align="center"><br />          <%=boton_agregar%></td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="2">&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+    </tr>
+  <%=env%><%=aleat%><%=lista%><%=edit_inser_borr%>
+</table>
+</form>
+</body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
