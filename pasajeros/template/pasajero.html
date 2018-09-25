@@ -1,0 +1,1281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!--<meta http-equiv="Content-Type" content="text/html; windows 1252">-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">-->
+<!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8">-->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Pasajero</title>
+<!--
+-- firefox--
+*{-moz-box-sizing: border-box;box-sizing: border-box}
+p{margin-top:0px;margin-bottom:1em}
+form{margin:0px}
+input{padding:1px}
+
+-->
+<style type="text/css">
+<!--
+*{-moz-box-sizing: border-box;box-sizing: border-box}
+p{margin-top:0px;margin-bottom:1em}
+form{margin:0px}
+input{padding:1px}
+
+.Estilo1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color: #FFFF00;
+}
+.Estilo2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+.Estilo3 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	text-align: justify;
+	color: #575969;
+}
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-color: #FFFFFF;
+}
+a:link {
+	color: #FFFFFF;
+}
+a:visited {
+	color: #FFFFFF;
+}
+a:hover {
+	color: #FFFFFF;
+}
+a:active {
+	color: #FFFFFF;
+}
+.Estilo25 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+}
+.Estilo29 {font-size: 14}
+.Estilo16 {	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+.Estilo31 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #00aff2;
+	text-align: left;
+}
+.Estilo32 {
+	color: #57595b
+}
+.Estilo98 {
+	color:#FFBF00
+}
+
+input[type="text"] { 
+  font-family: 'Arial', serif; 
+  color: #000000; 
+  font-size: 13px;  
+  background-color: #91e1fa; 
+} 
+textarea {   
+  background-color: #91e1fa; 
+  font-family: 'Arial', serif; 
+  color: #000000; 
+  font-size: 13px;
+} 
+
+
+
+-->
+</style>
+<link rel="stylesheet" href="../css/estilo_autogest.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="../css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="../css/jquery-ui.css">
+<!--<script src="../Scripts/AC_RunActiveContent.js" type="text/javascript"></script>-->
+<script type="text/javascript">
+	function buscar()
+	{
+		if(document.forms["form1"].elements["camp_busc"].value != "")
+		{
+			document.form1.action = "pasajero.asp?b=1";	
+			document.form1.submit();
+		}
+		else
+		{
+			alert("Por favor introduzca el nombre del pasajero que desea buscar");
+		}
+	}	
+	
+	function deshabHabilitaCed()
+	{
+		if(document.forms["form1"].elements["ced_menor"].checked == true)
+		{
+			document.forms["form1"].elements["cedula"].value = "Menor";
+			document.forms["form1"].elements["cedula"].disabled = true;	
+		}
+		else
+		{
+			document.forms["form1"].elements["cedula"].value = "";
+			document.forms["form1"].elements["cedula"].disabled = false;		
+		}
+	}
+
+	function envia(){
+		//document.getElementById("ast").style.visibility = 'hidden';
+		//form1.action ="reg.asp";
+		//document.form1.submit();
+		//var camp = 'nom_ape|fechnac|ciudad|nac_pasaj|res_pasaj';
+	    //var ast = 'ast_nom_ape|ast_fechnac|ast_ciudad|ast_nac_pasaj|ast_res_pasaj';
+		//var vali = '¬|¬|¬|¬';
+		//apellido = campo("apellido", "text", "apellido", "30", "50", "1", apellidor, "OnBlur='caractNoPermit(this)'")
+		//alert(document.forms["form1"].elements["edit_inser_borr"].value);
+		
+		
+		
+		var camp = 'nom_ape|apellido|nac_pasaj|cedula|res_pasaj|ciudad';
+		var ast = 'ast_nom_ape|ast_apellido|ast_nac_pasaj|ast_cedula|ast_res_pasaj|ast_ciudad';
+		var vali = '¬|¬|¬|¬|¬|¬';
+
+		
+		
+		if (verifica2(camp, ast, vali, '|', "form1") == false){
+			alert("Los campos con el '*' no pueden estar vacios");
+		}
+		else{
+			//		28-04-2014
+			
+			//La variable pais_nac, se utilizaba antes para
+			//validar por javascript (en cliente) que el pais de nacimiento
+			//estuviera registrado. Se hacía una búsqueda
+			//en un archivo que tiene un array en "js" (autosuggest) con todos los paises
+			// si se encontraba el valor de es ciudad > 0 
+			//ahora el procedimiento se hace con ASP del lado del servidor.
+			//Debido a que el cliente hace cambios prácticamente a diario en módulos antiguos
+			//(se recomienda hacer un diseño más a largo plazo)
+			//el valor de ciudad será "1" en vez de "0" para saltarse la validación y
+			//hacer la modificación de la forma más rápida posible...
+			
+			
+			var pais_nac = 0;
+			var pais_res = 0;
+			var cod_pais =0;
+			var cod_pais_res=0;
+			var ciudad = 1;
+			var cod_ciudad =0;
+			var esta = 0;
+			var cod_edo_pasaj = 0;
+			var estdoVer = "";
+
+			var j;
+			
+			
+			
+			//alert("PRUEBA2");
+			
+			
+			for(j=0;j<pais.length;j++){
+				if(pais[j]==document.forms["form1"].elements["nac_pasaj"].value){
+					cod_pais = pais_cod[j][0]
+					pais_nac++;
+				}
+			}
+			for(j=0;j<pais.length;j++){
+				if(pais[j]==document.forms["form1"].elements["res_pasaj"].value){
+					cod_pais_res = pais_cod[j][0]
+					pais_res++;
+				}
+			}			
+			
+			//Se mantiene este código en comentario
+			//ya que este formulario se mantiene en cambio
+			//constante
+			/*for(j=0;j<ciudades.length;j++){
+				if(ciudades[j]==document.forms["form1"].elements["ciudad"].value){
+					cod_ciudad = ciudades_cod[j][0]
+					ciudad++;
+				}
+			}
+			
+			for(j=0;j<estado.length;j++){
+				estdoVer = document.forms["form1"].elements["edo_vzla_pasaj"].value;
+				if(estado[j].toUpperCase()==estdoVer.toUpperCase()){
+					cod_edo_pasaj = estado_cod[j][0]
+					esta++;
+				}
+			}*/
+			
+			if (pais_nac > 0){
+		    		if(ciudad > 0)
+		    		{
+					if ((img_val(document.form1.img_pasap, "bmp|gif|jpg|png") == true) && (img_val(document.form1.img_visa_eua, "bmp|gif|jpg|png") == true)){
+						//document.form1.action = "pasajero.asp";
+						var alea = aleatorio(1,5000);
+						var pasp;
+						var visa;
+						var ced_vzl = 0;
+						
+						if(document.forms["form1"].elements["cedula"].value != "")
+							ced_vzl = 1;
+						if(document.forms["form1"].elements["ced_menor"].checked == true)
+							ced_vzl = 1;
+						pasp = not_xor(document.forms["form1"].elements["num_pasap"].value, document.forms["form1"].elements["fec_venc"].value);
+						visa = not_xor(document.forms["form1"].elements["num_visa_eua"].value, document.forms["form1"].elements["fec_venc_visa_eua"].value);
+						
+						if ((document.forms["form1"].elements["num_pasap"].value =="")&&(ced_vzl ==0))
+							alert("Se recomienda que el pasajero tenga por lo menos un documento de identificación (c\u00e9dula o pasaporte)");
+						else
+						{
+							if ((visa*pasp) ==1){
+								//if(document.forms["form1"].elements["res_pasaj"].value != "")
+								//{
+									document.forms["form1"].action = "pasajero.asp?b=0";
+									if (document.form1.aleat.value == alea)
+										document.form1.aleat.value = alea + 1;
+									else
+										document.form1.aleat.value = alea;
+							
+									if (document.forms["form1"].elements["aleat"].value == alea)
+										document.forms["form1"].elements["aleat"].value = alea + 1;
+									else
+										document.forms["form1"].elements["aleat"].value = alea;
+							
+									document.forms["form1"].elements["cod_ciud"].value = cod_ciudad;
+									document.forms["form1"].elements["cod_nac_pasaj"].value = cod_pais;
+									document.forms["form1"].elements["cod_res_pasaj"].value = cod_pais_res;
+									document.forms["form1"].elements["cod_edo_vzla_pasaj"].value = cod_edo_pasaj;
+									document.form1.submit();
+								//}
+								//else
+								//		alert("El campo país de residencia no puede quedar vacío");
+							}
+							else{
+								alert("El pasaporte y/o visa (en caso de ser necesarios) deben tener su fecha de vencimiento y viceversa");
+							}
+						}
+						/*img = document.createElement("IMG"); 
+						alert(document.getElementById("img_pasap").value);
+						img.src = document.getElementById("img_pasap").value; 
+						img.id = "fotoFinal"; 
+						img.style.visibility = "hidden"; 
+						document.body.appendChild(img); 
+						setTimeout("alert(Math.round((document.getElementById('fotoFinal').fileSize / 1024)*Math.pow(10,2)) / Math.pow(10,2)); ",500); */
+				
+					}
+					else{
+						alert("Solo se aceptan archivos jpg, gif, bmp o png"); 
+					}
+				}
+				else
+					alert("La ciudad '" + document.forms["form1"].elements["ciudad"].value + "' no se encuentra registrada");
+			}
+			else
+				alert("El pa\u00EDs '" + document.forms["form1"].elements["nac_pasaj"].value + "' no se encuentra registrado");
+		}		
+	}
+	
+	function aleatorio(inferior,superior){
+    	numPosibilidades = superior - inferior
+    	aleat = Math.random() * numPosibilidades
+    	aleat = Math.round(aleat)
+    	return parseInt(inferior) + aleat
+	} 
+	
+		//hidden_num_reg = num de filas de la matriz de elementos insertados
+	//Ej document.form1.lista.value
+	function llenaCampEdit(hidden_num_reg)
+	{
+		var j=0;
+		var x = hidden_num_reg;
+		var menor =0;
+		
+		
+		 var elDiv = document.getElementById('VerPas'); //se define la variable "elDiv" igual a nuestro div
+         elDiv.style.display='block';
+		 
+		 var elDiv2 = document.getElementById('VerVisa'); //se define la variable "elDiv" igual a nuestro div
+         elDiv2.style.display='block';
+		
+		
+		
+		if (x > 1){
+			j = cuenta_reg_Select("form1", "selct_fila", x);
+			if (j > 1)
+				alert("Seleccione un registro para editar");
+			if(j == 1){
+				for(var i = 1; i < x; i++){
+					check_box_nom = "selct_fila" + String(i);
+					if(document.forms["form1"].elements[check_box_nom].checked==true)
+						break;
+				}
+				var cedulaNum = document.forms["form1"].elements[check_box_nom + "_2"].value;
+				if (cedulaNum.indexOf("_") > -1) 
+				{
+					//var str = cedulaNum.split("_");
+					//cedulaNum = str[0];
+					menor =1;
+				}
+				document.forms["form1"].elements["num_pasa"].value = document.forms["form1"].elements[check_box_nom + "_0"].value;
+				document.forms["form1"].elements["nom_ape"].value = document.forms["form1"].elements[check_box_nom + "_1"].value;
+				document.forms["form1"].elements["nom_ape2"].value = document.forms["form1"].elements[check_box_nom + "_1"].value;
+				document.forms["form1"].elements["apellido"].value = document.forms["form1"].elements[check_box_nom + "_17"].value;
+				document.forms["form1"].elements["apellido2"].value = document.forms["form1"].elements[check_box_nom + "_17"].value;
+				if (menor ==1)
+				{
+					document.forms["form1"].elements["cedula"].value = "Menor";
+					document.forms["form1"].elements["cedula"].disabled = true;
+					document.forms["form1"].elements["ced_menor"].checked = true;
+				}
+				else
+				{
+					document.forms["form1"].elements["cedula"].value = cedulaNum;
+					document.forms["form1"].elements["cedula"].disabled = false;
+					document.forms["form1"].elements["ced_menor"].checked = false;		
+				}
+				document.forms["form1"].elements["cedula2"].value = document.forms["form1"].elements[check_box_nom + "_2"].value;
+				document.forms["form1"].elements["tel_cel"].value = document.forms["form1"].elements[check_box_nom + "_3"].value;
+				document.forms["form1"].elements["e_mail"].value = document.forms["form1"].elements[check_box_nom + "_4"].value;
+				document.forms["form1"].elements["e_mail2"].value = document.forms["form1"].elements[check_box_nom + "_4"].value;
+				document.forms["form1"].elements["direcc"].value = document.forms["form1"].elements[check_box_nom + "_5"].value;
+				document.forms["form1"].elements["ciudad"].value = document.forms["form1"].elements[check_box_nom + "_6"].value;
+				document.forms["form1"].elements["num_pasap"].value = document.forms["form1"].elements[check_box_nom + "_7"].value;
+				document.forms["form1"].elements["num_pasap2"].value = document.forms["form1"].elements[check_box_nom + "_7"].value;
+				document.forms["form1"].elements["fec_venc"].value = document.forms["form1"].elements[check_box_nom + "_8"].value;
+				if (document.forms["form1"].elements[check_box_nom + "_9"].value != "")
+				{
+					document.forms["form1"].elements["img_pasap"].value = ""
+					//document.forms["form1"].elements["img_pasap"].style.background = "#0000FF"
+				}
+				else
+				{
+					document.forms["form1"].elements["img_pasap"].style.background = "#FFFFFF"
+				}
+				document.forms["form1"].elements["num_visa_eua"].value = document.forms["form1"].elements[check_box_nom + "_10"].value;
+				document.forms["form1"].elements["num_visa_eua2"].value = document.forms["form1"].elements[check_box_nom + "_10"].value;
+				document.forms["form1"].elements["fec_venc_visa_eua"].value = document.forms["form1"].elements[check_box_nom + "_11"].value;
+				if (document.forms["form1"].elements[check_box_nom + "_12"].value != "")
+				{
+					document.forms["form1"].elements["img_visa_eua"].value = ""
+					//document.forms["form1"].elements["img_visa_eua"].style.background = "#0000FF"
+				}
+				else
+				{
+					document.forms["form1"].elements["img_visa_eua"].style.background = "#FFFFFF"
+				}
+				if (document.forms["form1"].elements[check_box_nom + "_13"].value == "Si")
+				{	
+					document.forms["form1"].elements["activo"].checked = true;
+				}	
+				else
+				{
+					document.forms["form1"].elements["activo"].checked = false;
+				}
+				//if (document.forms["form1"].elements[check_box_nom + "_18"].value = 1)
+				//{
+				//	document.forms["form1"].elements["sex2"].checked = true;
+				//}	
+				//else
+				//{
+				//	document.forms["form1"].elements["sex"].checked = true;
+				//}
+				
+				var valor = document.forms["form1"].elements[check_box_nom + "_18"].value; 
+				
+				if(valor == "F"){
+					
+					//alert("ENTRE 1" );
+				
+					 for (i=0;i<document.forms["form1"].elements["sexo"].length;i++){ 
+					    if (document.forms["form1"].elements["sexo"][i].value > 0){
+							               //alert("A" + document.forms["form1"].elements["sexo"][i].value);
+							 document.forms["form1"].elements["sexo"][i].checked=true
+							 break; 
+						 } 
+					 }	
+				
+				}else{
+					
+					 //alert("ENTRE 2");
+					
+					 for (i=0;i<document.form1.sexo.length;i++){ 
+						 if (document.forms["form1"].elements["sexo"][i].value <= 0){
+							               //alert("B" + document.forms["form1"].elements["sexo"][i].value);
+							 document.forms["form1"].elements["sexo"][i].checked=true
+						     break; 
+						 } 
+					  }		
+				
+				}	
+												
+				document.forms["form1"].elements["edit_inser_borr"].value = "1";
+				document.forms["form1"].elements["fechnac"].value = document.forms["form1"].elements[check_box_nom + "_14"].value;
+				document.forms["form1"].elements["remitido"].value = document.forms["form1"].elements[check_box_nom + "_15"].value;
+				document.forms["form1"].elements["nac_pasaj"].value = recomponer(document.forms["form1"].elements[check_box_nom + "_16"].value);
+				document.forms["form1"].elements["ocupa"].value = recomponer(document.forms["form1"].elements[check_box_nom + "_19"].value);
+				document.forms["form1"].elements["res_pasaj"].value = recomponer(document.forms["form1"].elements[check_box_nom + "_20"].value);
+				document.forms["form1"].elements["edo_vzla_pasaj"].value = recomponer(document.forms["form1"].elements[check_box_nom + "_21"].value);
+				document.forms["form1"].elements["tipo_visa"].value = recomponer(document.forms["form1"].elements[check_box_nom + "_22"].value);
+				document.forms["form1"].elements["ciu_exp"].value = recomponer(document.forms["form1"].elements[check_box_nom + "_23"].value);
+				document.forms["form1"].elements["fec_venc_visa_extr"].value = recomponer(document.forms["form1"].elements[check_box_nom + "_24"].value);
+				document.forms["form1"].elements["img_pasap"].value = document.forms["form1"].elements[check_box_nom + "_25"].value;			
+			    document.forms["form1"].elements["img_visa_eua"].value = document.forms["form1"].elements[check_box_nom + "_26"].value;		
+			}
+		}
+	}
+	
+	function elimina(hidden_num_pasa)
+	{
+			if (hidden_num_pasa == 0){
+				alert("Seleccione por lo menos un registro");
+			}
+			else{
+				
+				var confirmacion;
+				var confirmacion2;
+				confirmacion = confirm("¿Desea usted eliminar estos \u00edtems?");
+				if (confirmacion == true){
+					confirmacion2 = confirm("¿Est\u00e1 usted seguro de eliminar estos \u00edtems?"); 
+					if (confirmacion2 == true){
+						document.forms["form1"].action = "pasajero.asp?b=0";
+						//document.form1.action = "aeronave.asp";
+						document.forms["form1"].elements["edit_inser_borr"].value = "2";
+						//Garantizar que sea un número diferente siempre
+						//así se diferencia un submit de un refresh
+						var alea = aleatorio(1,5000);
+						if (document.form1.aleat.value == alea)
+							document.form1.aleat.value = alea + 1
+						else
+							document.form1.aleat.value = alea
+						document.forms["form1"].submit();
+						//document.form1.submit();
+					}
+				}
+			}
+	}
+	
+	//Desuso
+	function elimina2(hidden_num_reg)
+	{
+		var j=0;
+		//var x = hidden_num_reg;
+		var x = 2;
+		if (x > 1){
+			//j = cuenta_reg_Select("form1", "selct_fila", x);
+			if (j == 0){
+				alert("Seleccione por lo menos un registro");
+			}
+			else{
+				var confirmacion;
+				var confirmacion2;
+				confirmacion = confirm("¿Desea usted eliminar estos \u00edtems?");
+				if (confirmacion == true){
+					confirmacion2 = confirm("¿Est\u00e1 usted seguro de eliminar estos \u00edtems?"); 
+					if (confirmacion2 == true){
+						document.forms["form1"].action = "pasajero.asp?b=0";
+						//document.form1.action = "aeronave.asp";
+						document.forms["form1"].elements["edit_inser_borr"].value = "2";
+						//Garantizar que sea un número diferente siempre
+						//así se diferencia un submit de un refresh
+						var alea = aleatorio(1,5000);
+						if (document.form1.aleat.value == alea)
+							document.form1.aleat.value = alea + 1
+						else
+							document.form1.aleat.value = alea
+						//document.forms["form1"].submit();
+						//document.form1.submit();
+						alert("elimina");
+					}
+				}
+			}
+		}
+	}
+	
+	function submit() {
+
+                
+                var largo = document.forms["form1"].elements["busquedaPas"].value;
+                 
+                var n = largo.length;
+		
+                if (n > 2){
+				   document.form1.action = "pasajero.asp?busquedaPas="+largo;	
+		           document.form1.submit();
+                }else{
+                    alert("Ingrese un valor de bùsqueda de mayor tamaño");
+                }
+		
+		
+	}	
+</script>
+<script src="Scripts/AC_RunActiveContent.js" type="text/javascript"></script>
+<style type="text/css">
+<!--
+.style1 {
+	font-family: Verdana;
+	color: #000000;
+	font-size: 10px;
+	text-align: right;
+}
+-->
+</style>
+
+<link rel="stylesheet" type="text/css" href="../js/jquerycssmenu.css" />
+<style type="text/css">
+.Estilo11 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 30px;
+	color: #00aff2;
+}
+.Estilo251 {	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 16px;
+	color: #57595b;
+	text-align: center;
+}
+.Estilo33 {	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	text-align: center;
+	color: #000000;
+}
+.Estilo311 {	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #00ADE5;
+	text-align: center;
+}
+.Estilo33 {	color: #000000
+}
+</style>
+
+
+
+
+<style>
+
+#VerPas {
+	overflow:hidden; display:none; margin-left:72px; margin-top:-22px;
+}
+
+#VerVisa {
+	overflow:hidden; display:none; margin-left:72px; margin-top:-22px;
+}
+
+
+
+
+
+</style>
+
+
+
+
+<style>
+th, td { white-space:  }
+    div.dataTables_wrapper {
+        width: 800px;
+        margin: 0 auto;
+    }
+
+</style>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquerycssmenu.js"></script>
+
+
+
+
+<script src="../js/jquery-1.10.2.min.js"></script>
+<script src="../js/jquery.dataTables.js"></script>
+<script src="../js/jquery-ui.js"></script>
+
+<script>
+ $(function() {
+        $( "#tabs" ).tabs();
+        });
+
+$(document).ready(function() {
+	
+		
+	 
+	  
+	  //-------------------------------------------------------------
+	  
+	    
+		var selected = [];	  
+	  
+		//INICIALIZACION**********************  
+		var table = $("#table_id").DataTable({  
+		"scrollX": true,
+		stateSave: true,
+        "processing": true,
+        "serverSide": false,
+		"order": [[ 1, "asc" ]],		
+		
+		 "rowCallback": function( row, data ) {
+            if ( $.inArray(data.DT_RowId, selected) !== -1 ) {
+                $(row).addClass('selected');
+            }
+        },
+		
+		"columnDefs": [
+            {
+                "targets": [ 12 ],
+                "visible": false,
+                "searchable": true
+            },
+			
+			{
+                "targets": [ 13 ],
+                "visible": false,
+                "searchable": true
+            },
+			{
+                "targets": [ 14 ],
+                "visible": false,
+                "searchable": true
+            },
+			{
+                "targets": [ 15 ],
+                "visible": false,
+                "searchable": true
+            },
+			{
+                "targets": [ 16 ],
+                "visible": false,
+                "searchable": true
+            },
+			{
+                "targets": [ 17 ],
+                "visible": false,
+                "searchable": true
+            },
+			{
+                "targets": [ 18 ],
+                "visible": false,
+                "searchable": true
+            }
+			
+			
+			
+        ]		
+		
+        });
+		
+		
+		
+		//DATA TABLA
+		var data = table
+        .rows()
+        .data();
+		
+		
+		//SELECCION ROW**************************************
+		$('#table_id tbody').on( 'click', 'tr', function () {
+			
+		var id = this.id;
+        var index = $.inArray(id, selected);		
+		var tr = $(this).parents('tr').data(); 
+	    var data = table.row( this ).data();
+		var ok = 0;
+		var otros = "";
+		
+		    $('#form1')[0].reset();	
+				
+			if ( $(this).hasClass('selected') ) {
+				
+				
+				$(this).removeClass('selected');
+			}
+			else {
+				table.$('tr.selected').removeClass('selected');
+				$(this).addClass('selected');
+				ok = 1;
+			}
+			
+			
+			if (ok = 1){
+				otros = data[19].split("|");
+				//document.forms["form1"].elements["nom_ape"].value = data[0];
+				document.forms["form1"].elements["cedula"].value = data[1];
+				document.forms["form1"].elements["cedula2"].value  = data[1];
+				document.forms["form1"].elements["tel_cel"].value = data[2];
+				document.forms["form1"].elements["e_mail"].value = data[3];
+				document.forms["form1"].elements["e_mail2"].value = data[3];
+				document.forms["form1"].elements["direcc"].value = data[4];
+				document.forms["form1"].elements["ciudad"].value = data[5];				
+				document.forms["form1"].elements["num_pasap"].value = data[6];
+				document.forms["form1"].elements["num_pasap2"].value = data[6];	
+				document.forms["form1"].elements["num_pasa"].value = data[6];				
+				document.forms["form1"].elements["fec_venc"].value = data[7];
+				//document.forms["form1"].elements["img_pasap"].value = data[8];				
+				document.forms["form1"].elements["num_visa_eua"].value = data[9];	
+				document.forms["form1"].elements["num_visa_eua2"].value	= data[9];		
+				document.forms["form1"].elements["fec_venc_visa_eua"].value = data[10];
+				//document.forms["form1"].elements["img_visa_eua"].value = data[11];
+				document.forms["form1"].elements["apellido"].value = data[12];
+				document.forms["form1"].elements["ocupa"].value = data[13];				
+				document.forms["form1"].elements["res_pasaj"].value = data[14];
+				document.forms["form1"].elements["nac_pasaj"].value = data[15];			
+				document.forms["form1"].elements["edo_vzla_pasaj"].value = data[16];			
+				document.forms["form1"].elements["fechnac"].value = data[17];
+				document.forms["form1"].elements["nom_ape"].value = data[18];
+				document.forms["form1"].elements["num_pasa"].value = otros[0];
+				if(otros[1] == "False"){
+					document.forms["form1"].elements["sexo"].value=0;
+				}
+				else{
+					document.forms["form1"].elements["sexo"].value=1;	
+				}
+				if(otros[2] == "False"){
+					document.forms["form1"].elements["activo"].checked=false;
+				}
+				else{
+					document.forms["form1"].elements["activo"].checked=true;	
+				}
+				document.forms["form1"].elements["edit_inser_borr"].value = '1';
+								
+			}
+		
+        } );
+			
+		
+		
+		//document.forms["form1"].elements["nom_ape"].value =
+		
+		
+		
+		/*$('#table_id tbody').on('click', 'tr', function () {
+        var id = this.id;
+        var index = $.inArray(id, selected);		
+		var tr = $(this).parents('tr').data(); 
+	    var data = table.row( this ).data();
+		var ok = 0;
+		
+		
+		$("#selec option").each(function(){        
+		  if (data[0] == $(this).attr('value')){		  
+		     ok = 1;
+		  }		  
+         });*/
+		 
+		  
+		  
+		 
+		
+		
+		   
+		
+		    
+        /*if ( index === -1 ) {
+            selected.push( id );
+        } else {			
+			 selected.splice( index, 1 );
+        }
+ 
+        $(this).toggleClass('selected');
+        } );*/
+		
+		
+		
+		
+		
+} );		
+		
+		
+		
+function message() {
+
+   if ((document.forms["form1"].elements["guard"].value == "1") && (document.forms["form1"].elements["refresco"].value == "False") && (document.forms["form1"].elements["BP"].value == "")  ){
+   //if ((document.forms["form1"].elements["guard"].value == "1") && (document.forms["form1"].elements["b"].value == 0)){
+
+      alert("Registro Guardado Satisfactoriamente");
+
+   }
+		
+}		
+
+
+
+
+
+
+</script>
+
+
+
+
+</head>
+<body onload="message();">
+<table width="839" height="100" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+	<td colspan="8" bgcolor="#29AAE3"><div align="center"><img src="../imagenes/top_pasajero.jpg" width="840" height="225" /></div></td>
+</tr>
+<tr>
+  <td colspan="8" bgcolor="#29AAE3"><!--#include file="../manifiestos/enlaces.asp" --></td>
+</tr>
+</table>
+<form id="form1" name="form1" method="post" enctype="multipart/form-data" action="">
+
+<input id="guard" name="guard" type="hidden" value="<%=guard%>">
+<input id="refresco" name="refresco" type="hidden" value="<%=refresco%>">
+<input id="b" name="b" type="hidden" value="<%=b%>">
+<input id="BP" name="BP" type="hidden" value="<%=filtrobusqueda%>">
+
+
+
+ 
+    <!--<table width="840" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#f5fcf0">-->
+    <table style="margin-left:220px;" width="840" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="">
+      <tr>
+        <td colspan="3">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="2"><%=Nom_cli%></td>
+      </tr>
+      <tr>
+        <td colspan="3">&nbsp;</td>
+      </tr>
+      <tr>
+        <td width="34">&nbsp;</td>
+        <td colspan="2"><span class="Estilo11">Pasajero</span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td align="Justify"><span class="Estilo3"><span class="Estilo3">Cuentas con esta p&aacute;gina para registrar los datos de los  pasajeros que vuelen contigo. Al registrarlos una vez podr&aacute;s disponer de ese  mismo registro las veces que sea necesario para otros vuelos. Podr&aacute;s adjuntar  im&aacute;genes de documentos escaneados y disponer de ellas en todo momento. Todos  los registros efectuados podr&aacute;n ser consultados desde la tabla de m&aacute;s abajo y  modificados o eliminados de ser necesarios. Tambi&eacute;n puede pasar a un status de  desactivados o no activos</span>.</span></td>
+        <td width="42">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><table width="764" border="0" cellspacing="0" cellpadding="0"bgcolor="#f5fcf0" >
+          <tr>
+            <td width="335" valign="top"><table width="335" border="0" cellspacing="0" cellpadding="0"  >
+              <tr>
+                <td colspan="2"><span class="Estilo31">Nuevo pasajero</span></td>
+              </tr>
+            
+   <!--------------------------------------------------------------------------------------------->         
+             <table id="TABLA 1" style="display:inline;float:left; width:700px; ">                    
+                  <tr>
+                    <td colspan="2">&nbsp;</td>
+                  </tr>
+              <tr>
+                <td style="width:100px;"><span class="Estilo16"></span> <span class="Estilo25">Nombre</span><Span class="Estilo98"> *</span>
+                </td>
+                
+                 <td>
+                    <%=nom_ape%><%=ast_nom_ape%>
+                 </td>
+                 
+                 <td style="width:50px;"></td>
+                 
+                    
+                <td style="width:100px;"><span class="Estilo25">Apellido</span><Span class="Estilo98"> *</span>
+                </td>
+                
+                <td >                
+                  <%=apellido%><%=ast_apellido%>
+                </td>
+              </tr>
+              
+             </table>
+            
+    <!--------------------------------------------------------------------------------------------->        
+            
+            <table id="TABLA 2" style="display:inline;float:left;width:700px; ">  
+            
+              <tr>
+                <td colspan="3" ></td>
+                <td ><span class="style1">Ejem. V12345678 </span></td>
+              </tr>
+              
+              <tr>
+                <td style="width:100px;"><span class="Estilo25">Sexo</span></td>
+                
+                <td style="float:left;width:225px;" ><label><%=sexo%></label>
+                  <span class="Estilo25"> <span class="style1"><span class="Estilo25">Masculino</span></span></span><label><%=sexo2%></label>
+                  <span class="Estilo25"><span class="style1"><span class="Estilo25">Femenino</span></span></span>                 </td>
+                  
+                 <td style="width:50px;"></td> 
+                  
+                 <td style="width:100px;"><span class="Estilo25">C&eacute;dula</span> <Span class="Estilo98"> *</span></td> 
+                 
+                <td style="float:left;width:225px;"><%=cedula%> <%=ast_cedula%> <span class="style1">Marque si es menor</span></td>
+                
+               </tr>
+              
+             </table>   
+            
+            
+   <!--------------------------------------------------------------------------------------------->          
+            
+            <table id="TABLA 3" style="display:inline;float:left; "> 
+
+              <tr>
+                <td colspan="3" ></td>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+              
+              <tr>
+                <td style="width:100px;"><span class="Estilo25">Ocupaci&oacute;n</span></td>
+                
+                <td style="float:left;width:225px;"><%=ocupa%><%=ast_ocupa%></td>
+                
+                <td style="width:50px;"></td> 
+                
+                <td style="width:100px;"><span class="Estilo25">Pa&iacute;s de residencia </span><Span class="Estilo98">*</span></td>
+                  
+                <td style="float:left;width:225px;"><div id="autosuggest5"><ul></ul></div>                
+                  <!--#include file="../js/list_autogest_pais.js" -->
+                  <!--#include file="../js/list_autogest_pais_cod.js" -->
+                  
+                  <div id="autosuggest"><ul></ul></div>
+                  
+                  <label><div align="left"><%=res_pasaj%><%=ast_res_pasaj%></div></label>
+                  <script language="javascript" type="text/javascript">new AutoSuggest(document.getElementById('res_pasaj'),pais);</script>                  
+                 </td>
+              </tr>
+              
+            </table> 
+            
+     <!--------------------------------------------------------------------------------------------->     
+     
+     <table id="TABLA 33" style="display:inline;float:left; "> 
+
+              <tr>
+                <td colspan="3" ></td>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+              
+              <tr>
+                <!--<td style="width:100px;"><span class="Estilo25">Ocupaci&oacute;n</span></td>
+                
+                <td style="float:left;width:225px;"><%'=ocupa%><%'=ast_ocupa%></td>
+                
+                <td style="width:50px;"></td> -->
+                
+                <td style="width:100px;"><span class="Estilo25">Pa&iacute;s de nacionalidad </span><Span class="Estilo98">*</span></td>
+                  
+                <td style="float:left;width:225px;"><div id="autosuggest5"><ul></ul></div>                
+                  <!--#include file="../js/list_autogest_pais.js" -->
+                  <!--#include file="../js/list_autogest_pais_cod.js" -->
+                  
+                  <div id="autosuggest"><ul></ul></div>
+                  
+                  <label><div align="left"><%=nac_pasaj%><%=ast_nac_pasaj%></div></label>
+                  <script language="javascript" type="text/javascript">new AutoSuggest(document.getElementById('nac_pasaj'),pais);</script>                  
+                 </td>
+              </tr>
+              
+            </table>        
+            
+   
+   
+   
+    <!--------------------------------------------------------------------------------------------->             
+       
+      <table id="TABLA 4" style="display:inline;float:left;width:700px; "> 
+
+              <tr>
+                <td colspan="3" ></td>
+                <td colspan="2">&nbsp;</td>
+              </tr>              
+              
+              <tr>
+                <td style="width:100px;"><span class="Estilo25">Estado</span></td>
+                
+                <td style="float:left;width:225px;" ><label> <%=edo_vzla_pasaj%><%=ast_edo_vzla_pasaj%></label></td>
+                <td style="width:50px;"></td> 
+             
+                <td style="width:100px;"><span class="Estilo25">Fecha de nacimiento </span></td>
+                
+                <td style="float:left;width:225px;"><%=fechnac%><%=cal%><%=ast_fechnac%></td>
+              </tr>
+              
+       </table>          
+              
+       <!--------------------------------------------------------------------------------------------->          
+       
+        <table id="TABLA 5" style="display:inline;float:left;width:700px; "> 
+
+               <tr>
+                <td colspan="3" ></td>
+                <td colspan="2">&nbsp;</td>
+               </tr>
+               
+              <tr>
+                <td style="width:100px;"><span class="Estilo25">Tel&eacute;fono celular</span></td>
+                
+                <td style="float:left;width:225px;"><span class="Estilo25"><%=tel_cel%><%=ast_tel_cel%></span></td>             
+                <td style="width:50px;"></td>   
+              
+                <td style="width:100px;"><span class="Estilo25">Email</span></td>
+                
+                <td style="float:left;width:225px;"><span class="Estilo25"><%=e_mail%><%=ast_e_mail%></span></td>
+              </tr>
+              
+         </table>   
+         
+         
+        <!--------------------------------------------------------------------------------------------->   
+          
+         <table id="TABLA 6" style="display:inline;float:left;width:700px; "> 
+
+              <tr>
+                <td colspan="3" ></td>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+              
+              <tr>
+                <td style="width:100px;"><span class="Estilo25">Direcci&oacute;n</span></td>
+                
+                <td style="float:left;width:225px;"><%=direcc%><%=ast_direcc%></td>
+             
+                <td style="width:50px;"></td> 
+              
+                <td style="width:100px;"><label><span class="Estilo25">Ciudad</span></label><Span class="Estilo98"> *</span></td>
+                
+                <td style="float:left;width:225px;"><span class="Estilo2"><label> <%=ciudad%><%=ast_ciudad%></label></span></td>
+                
+              </tr>
+              
+          </table>   
+ 
+ 
+      <!--------------------------------------------------------------------------------------------->
+         
+         <table id="TABLA 7" style="display:inline;float:left;width:700px; "> 
+
+              <tr>
+                <td colspan="3" ></td>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+              
+              <tr>
+                <td style="width:100px;"><span class="Estilo25">N&ordm; pasaporte</span></td>
+                
+                <td style="float:left;width:225px;"><%=num_pasap%><%=ast_num_pasap%></td>
+                
+                <td style="width:50px;"></td> 
+              
+                <td style="width:100px;"><span class="Estilo25">Fecha de vencimiento</span></td>
+                
+                <td style="float:left;width:225px;"><%=fec_venc%><%=cal2%><%=ast_fec_venc%></td>
+              </tr>
+              
+         </table>            
+             
+      <!--------------------------------------------------------------------------------------------->
+  
+        <table id="TABLA 8" style="display:inline;float:left;width:700px; "> 
+
+              <tr>
+                <td colspan="3" ></td>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+              
+              <tr>
+                <td style="width:100px;"><span class="Estilo25">Imagen pasaporte</span></td>
+                <td style="float:left;width:225px;" ><%=img_pasap%><div id="VerPas"  ><%=botonVer1%></div></td>
+                
+                <td style="width:50px;"></td> 
+             
+                <td style="width:100px;"><span class="Estilo25">N&ordm; visa americana</span></td>
+                <td style="float:left;width:225px;"><%=num_visa_eua%><%=ast_num_visa_eua%></td>
+              </tr>
+              
+         </table>     
+ 
+   <!--------------------------------------------------------------------------------------------->              
+       <table id="TABLA 9" style="display:inline;float:left;width:700px; "> 
+
+              <tr>
+                <td colspan="3" ></td>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+              
+              <tr>
+                <td style="width:100px;"><span class="Estilo25">Fecha de vencimiento</span></td>
+                
+                <td style="float:left;width:225px;"><%=fec_venc_visa_eua%> <%=cal3%><%=ast_fec_venc_visa_eua%></td>
+                
+                <td style="width:50px;"></td> 
+              
+                <td style="width:100px;"><span class="Estilo25">Imagen visa</span></td>
+                <td style="float:left;width:225px;"><%=img_visa_eua%><div id="VerVisa"  ><%=botonVer2%></div></td>
+                
+              </tr>
+              
+        </table>          
+            
+              
+    <!--------------------------------------------------------------------------------------------->          
+              
+              
+      <table id="TABLA 10" style="display:inline;float:left;width:700px; "> 
+
+             <tr>
+                <td colspan="3" ></td>
+                <td colspan="2">&nbsp;</td>
+             </tr>
+              
+             <tr>
+                <td style="width:100px;"><span class="Estilo25">Remitido por</span></td>
+                <td style="float:left;width:225px;"><label><%=remitido%></label></td>
+                
+                <td style="width:50px;"></td> 
+              
+                <td style="width:100px;"><span class="Estilo25">Activo</span></td>
+                <td style="float:left;width:225px;"><label><%=activo%></label></td>
+             </tr>
+              
+      </table>             
+              
+    <!--------------------------------------------------------------------------------------------->          
+      <table id="TABLA 11" style="display:inline;float:leftwidth:700px; "> 
+
+             <tr>
+                <td colspan="2"><span class="Estilo31">Si posee visa venezolana indique:</span></td>
+                <td colspan="3" ></td>
+                <td colspan="2">&nbsp;</td>            
+                
+              </tr>
+              
+              <tr>
+                <td style="width:100px;"><span class="Estilo25">Tipo de visa</span></td>
+                <td style="float:left;width:225px;"><div id="autosuggest2"><ul></ul></div><%=ast_tipo_visa%><%=tipo_visa%></td>
+                
+                <td style="width:50px;"></td> 
+              
+                <td style="width:100px;"><label><span class="Estilo25">Ciudad de expedici&oacute;n</span></label></td>
+                
+                <td style="float:left;width:225px;"><label> <%=ciu_exp%><%=ast_ciu_exp%></label></td>
+                
+              </tr>
+              
+       </table>         
+            
+       <!--------------------------------------------------------------------------------------------->         
+              
+        <table id="TABLA 12" style="display:inline;float:leftwidth:700px; ">        
+              
+              <tr>
+                <td colspan="3" ></td>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+              
+              <tr>
+                <td style="width:100px;"><span class="Estilo25">Fecha de vencimiento</span></td>
+                
+                <td style="float:left;width:225px;"><%=fec_venc_visa_extr%><%=cal5%><%=ast_fec_venc_visa_extr%></td>
+                
+              </tr>
+              
+          </table>     
+              
+              
+              
+              
+              <tr>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+              <tr>
+
+              </tr>
+              <tr>
+                <td colspan="2"><p align="left"> <br />
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <!--<img src="../Imagenes/boton_agregar.jpg" width="70" height="19" />-->
+                  <%=boton_agregar%><%=boton_editar%> <%=boton_borrar%></div> </p></td>
+              </tr>
+</table></td>           
+            
+            
+            
+           
+            <td width="419" valign="top"><table width="419" border="0" cellspacing="0" cellpadding="0">
+            </table></td>
+          </tr>
+          
+          
+        </table></td>
+        <td>&nbsp;</td>
+      </tr>
+      
+      
+      
+      
+        
+      <!-------------------------------------------------------->
+      <div style="overflow:auto; ">
+          <tr>
+          
+            <td style="width:100%;">
+                <div id="tabs" style="width:900px; margin-top:10px;margin-left: 180px;">  
+              
+                    <ul>
+                        <li><a href="#tabs-1">Pasajero</a></li>
+                    </ul>                 
+                     
+                   <div id="tabs-1"> 
+				     <%= bus_pas%>
+                     <%= tn%>
+                   </div>  
+                   
+              </div>
+            </td>
+           <td>&nbsp;</td>
+           </tr>  
+           
+          </div> 
+      
+          <!------------------------------------------------------>    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <%=env%>
+      <%=aleat%>
+      <%=lista%>
+      <%=edit_inser_borr%>
+	  <%=num_pasa%>
+    </table>
+    <!--#include file="../manifiestos/bottom.asp" -->
+</form>
+</body>
+</html>
