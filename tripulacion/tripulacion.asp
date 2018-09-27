@@ -1,5 +1,6 @@
 <% @ LCID = 1034 %>
 <!--#include file="../modulos/vali_sesion.asp" -->
+<!--#include file="../modulos/funcion.asp" -->
 <!--#include file="../modulos/control.asp" -->
 <!--#include file="../modulos/loader.asp"-->
 <!--#include file="../js/funcion.js" -->
@@ -14,7 +15,7 @@
 	Call lista_arch_js("siep\js\list_autogest_pais.js", "pais", "Nom_pais", "Siep_pais", "")
 	Call lista_arch_js2("siep\js\list_autogest_pais_cod.js", "pais_cod", "Cod_pais", "Nom_pais", "Siep_pais", "")
 	'On Error Resume Next
-	'Se tomï¿½ la decisiï¿½n de utilizar un script para tripulaciï¿½n y otro para pasajero'
+	'Se tomó la decisión de utilizar un script para tripulación y otro para pasajero'
 	'debido a su complejidad'
 	Response.Buffer = true
 	Dim load
@@ -53,7 +54,7 @@
 	
 	'response.write "numero" & nume_trip
 	'Usando Session ("rand")'
-	'Es la mejor soluciï¿½n hasta el momento para evitar que se inserte'
+	'Es la mejor solución hasta el momento para evitar que se inserte'
 	'al hacer un refresh'
 	if z <> Session ("rand") then
 		Session ("rand") = z
@@ -265,8 +266,8 @@
 				cod_edo_vzla_tripr = Cod_esta 'limpia(load.getValue("cod_edo_vzla_trip")) 
 				
 				'//////////////////////////////////////'			
-				'Solo nombre y tipo de tripulaciï¿½n no pueden ser null'
-				'No se admiten pasaporte, cï¿½dula, visa y/o correo repetidos '
+				'Solo nombre y tipo de tripulación no pueden ser null'
+				'No se admiten pasaporte, cédula, visa y/o correo repetidos '
 				'para un mismo cliente si no son null'
 				'////////////////////////////////////'
 
@@ -279,7 +280,7 @@
 				End if
 				if cedular <> "" And (cedular <> cedula2r) then
 					if Tabla_Vacia("Siep_trip", " Num_cedu_tri = '" & cedular & "' And Num_clie = " & Session("Num_clie")) = false then
-						call alerta("La cï¿½dula " & cedular & " se encuentra registrada ")
+						call alerta("La cédula " & cedular & " se encuentra registrada ")
 						err_nums =  err_nums + 1
 					End if
 				End if
@@ -1301,7 +1302,7 @@
 	
 	
 	
-	'Tipo de tripulaciï¿½n'
+	'Tipo de tripulación'
 	'<!--<select name="12" id="12">'
 	'<option value="blanco" selected="selected"></option>'
 	'<option value="PIC">PIC</option>'
@@ -1633,9 +1634,25 @@
  	tabla = tabla & "            </tr></thead>"
     
     'rstf.Open "Select t.*, p.Nom_pais From Siep_trip t  inner join Siep_pais p on t.Nac_tri = p.Cod_pais Where (t.Num_clie = " & Session("Num_clie") & ") Order By Nom_trip", cnnf, 1, 2
-    rstf.Open "Select t.*, p.Nom_pais From Siep_trip t  inner join Siep_pais p on t.Nac_tri = p.Cod_pais Where (t.Nom_trip like '%" & filtrobusqueda & "%') Order By Nom_trip", cnnf, 1, 2
+    'rstf.Open "Select t.*, p.Nom_pais From Siep_trip t  inner join Siep_pais p on t.Nac_tri = p.Cod_pais Where (t.Nom_trip like '%" & filtrobusqueda & "%') Order By Nom_trip", cnnf, 1, 2
 	
-    hid_tab = ""
+    
+	if filtrobusqueda <> "" then 
+		     rstf.Open "Select t.*, p.Nom_pais From Siep_trip t  inner join Siep_pais p on t.Nac_tri = p.Cod_pais Where (t.Nom_trip like '%" & filtrobusqueda & "%') Order By Nom_trip", cnnf, 1, 2
+	else
+		     rstf.Open "Select s.* From Siep_trip s Where  s.Num_trip = 0 Order By s.Nom_trip", cnnf, 1, 2	 
+	end if
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	hid_tab = ""
     if  not rstf.EOF then
     	tabla = tabla & "    <tbody>"
     	Do Until rstf.EOF	
